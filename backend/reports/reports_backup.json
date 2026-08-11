@@ -1,0 +1,3961 @@
+[
+    {
+        "id": "20260726185652",
+        "date": "26 July 2026",
+        "website": "google.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services"
+        },
+        "security_headers": {
+            "score": 16,
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Unknown Technology"
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ],
+            "summary": "2 security issues detected"
+        },
+        "created_at": "2026-07-26T18:56:52.175623"
+    },
+    {
+        "id": "20260726190024",
+        "date": "26 July 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Nginx",
+            "WordPress",
+            "React",
+            "Bootstrap"
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-07-26T19:00:24.359474"
+    },
+    {
+        "id": "20260726190408",
+        "date": "26 July 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Nginx",
+            "WordPress",
+            "React",
+            "Bootstrap"
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-07-26T19:04:08.094883"
+    },
+    {
+        "id": "20260726192300",
+        "date": "26 July 2026",
+        "website": "google.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services"
+        },
+        "security_headers": {
+            "score": 16,
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Unknown Technology"
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ],
+            "summary": "2 security issues detected"
+        },
+        "created_at": "2026-07-26T19:23:00.819417"
+    },
+    {
+        "id": "20260726192728",
+        "date": "26 July 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Nginx",
+            "WordPress",
+            "React",
+            "Bootstrap"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-07-26T19:27:28.185382"
+    },
+    {
+        "id": "20260727101718",
+        "date": "27 July 2026",
+        "website": "google.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services"
+        },
+        "security_headers": {
+            "score": 16,
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Unknown Technology"
+        ],
+        "ports": [
+            {
+                "port": 21,
+                "service": "FTP",
+                "status": "Open"
+            },
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ],
+            "summary": "2 security issues detected"
+        },
+        "created_at": "2026-07-27T10:17:18.023425"
+    },
+    {
+        "id": "20260727101831",
+        "date": "27 July 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Nginx",
+            "WordPress",
+            "React",
+            "Bootstrap"
+        ],
+        "ports": [
+            {
+                "port": 21,
+                "service": "FTP",
+                "status": "Open"
+            },
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-07-27T10:18:31.637171"
+    },
+    {
+        "id": "20260728101535",
+        "date": "28 July 2026",
+        "website": "instagram.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": false,
+            "issuer": "Unknown"
+        },
+        "security_headers": {
+            "score": 83,
+            "missing": [
+                "Referrer-Policy"
+            ]
+        },
+        "technologies": [],
+        "ports": [],
+        "port_analysis": [],
+        "vulnerabilities": [
+            "database.sql",
+            "config.php"
+        ],
+        "ai_report": {
+            "risk": "High",
+            "issues": [
+                {
+                    "title": "Invalid SSL Certificate",
+                    "severity": "High",
+                    "description": "Website SSL certificate is not valid."
+                },
+                {
+                    "title": "Exposed Vulnerabilities Found",
+                    "severity": "High",
+                    "description": "Security weaknesses detected during scan."
+                }
+            ],
+            "recommendations": [
+                "Install a valid SSL certificate."
+            ],
+            "summary": "2 security issues detected"
+        },
+        "created_at": "2026-07-28T10:15:35.131866"
+    },
+    {
+        "id": "20260728193351",
+        "date": "28 July 2026",
+        "website": "google.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services"
+        },
+        "security_headers": {
+            "score": 16,
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Unknown Technology"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ],
+            "summary": "2 security issues detected"
+        },
+        "created_at": "2026-07-28T19:33:51.854169"
+    },
+    {
+        "id": "20260729103353",
+        "date": "29 July 2026",
+        "website": "google.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services"
+        },
+        "security_headers": {
+            "score": 16,
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Unknown Technology"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ],
+            "summary": "2 security issues detected"
+        },
+        "created_at": "2026-07-29T10:33:53.144797"
+    },
+    {
+        "id": "20260729103955",
+        "date": "29 July 2026",
+        "website": "google.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services"
+        },
+        "security_headers": {
+            "score": 16,
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Unknown Technology"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ],
+            "summary": "2 security issues detected"
+        },
+        "created_at": "2026-07-29T10:39:55.820998"
+    },
+    {
+        "id": "20260729104046",
+        "date": "29 July 2026",
+        "website": "google.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services"
+        },
+        "security_headers": {
+            "score": 16,
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Unknown Technology"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ],
+            "summary": "2 security issues detected"
+        },
+        "created_at": "2026-07-29T10:40:46.481729"
+    },
+    {
+        "id": "20260729104540",
+        "date": "29 July 2026",
+        "website": "google.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services"
+        },
+        "security_headers": {
+            "score": 16,
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Unknown Technology"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ],
+            "summary": "2 security issues detected"
+        },
+        "created_at": "2026-07-29T10:45:40.601543"
+    },
+    {
+        "id": "20260729104937",
+        "date": "29 July 2026",
+        "website": "google.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services"
+        },
+        "security_headers": {
+            "score": 16,
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Unknown Technology"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ],
+            "summary": "2 security issues detected"
+        },
+        "created_at": "2026-07-29T10:49:37.182529"
+    },
+    {
+        "id": "20260729150812",
+        "date": "29 July 2026",
+        "website": "google.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services"
+        },
+        "security_headers": {
+            "score": 16,
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Unknown Technology"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ],
+            "summary": "2 security issues detected"
+        },
+        "created_at": "2026-07-29T15:08:12.736993"
+    },
+    {
+        "id": "20260729151246",
+        "date": "29 July 2026",
+        "website": "google.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services"
+        },
+        "security_headers": {
+            "score": 16,
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Unknown Technology"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ],
+            "summary": "2 security issues detected"
+        },
+        "created_at": "2026-07-29T15:12:46.653113"
+    },
+    {
+        "id": "20260729151616",
+        "date": "29 July 2026",
+        "website": "google.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services"
+        },
+        "security_headers": {
+            "score": 16,
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Unknown Technology"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ],
+            "summary": "2 security issues detected"
+        },
+        "created_at": "2026-07-29T15:16:16.882986"
+    },
+    {
+        "id": "20260729151839",
+        "date": "29 July 2026",
+        "website": "google.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services"
+        },
+        "security_headers": {
+            "score": 16,
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Unknown Technology"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ],
+            "summary": "2 security issues detected"
+        },
+        "created_at": "2026-07-29T15:18:39.524757"
+    },
+    {
+        "id": "20260731102818",
+        "date": "31 July 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "React",
+            "Nginx",
+            "Bootstrap",
+            "WordPress"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-07-31T10:28:18.956264"
+    },
+    {
+        "id": "20260731103029",
+        "date": "31 July 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Nginx",
+            "React",
+            "WordPress",
+            "Bootstrap"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-07-31T10:30:29.225066"
+    },
+    {
+        "id": "20260731103108",
+        "date": "31 July 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Nginx",
+            "React",
+            "WordPress",
+            "Bootstrap"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-07-31T10:31:08.539761"
+    },
+    {
+        "id": "20260731104250",
+        "date": "31 July 2026",
+        "website": "google.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services"
+        },
+        "security_headers": {
+            "score": 16,
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "No Framework Detected"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ],
+            "summary": "2 security issues detected"
+        },
+        "created_at": "2026-07-31T10:42:50.156035"
+    },
+    {
+        "id": "20260801161655",
+        "date": "01 August 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Bootstrap",
+            "Nginx",
+            "WordPress",
+            "React"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-08-01T16:16:55.027756"
+    },
+    {
+        "id": "20260801161933",
+        "date": "01 August 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Bootstrap",
+            "Nginx",
+            "WordPress",
+            "React"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-08-01T16:19:33.760804"
+    },
+    {
+        "id": "20260801162204",
+        "date": "01 August 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Bootstrap",
+            "Nginx",
+            "WordPress",
+            "React"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-08-01T16:22:04.737234"
+    },
+    {
+        "id": "20260801162440",
+        "date": "01 August 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Bootstrap",
+            "Nginx",
+            "WordPress",
+            "React"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-08-01T16:24:40.202109"
+    },
+    {
+        "id": "20260801163146",
+        "date": "01 August 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Bootstrap",
+            "Nginx",
+            "WordPress",
+            "React"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-08-01T16:31:46.724205"
+    },
+    {
+        "id": "20260801163551",
+        "date": "01 August 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Bootstrap",
+            "React",
+            "WordPress",
+            "Nginx"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-08-01T16:35:51.090182"
+    },
+    {
+        "id": "20260801163600",
+        "date": "01 August 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Bootstrap",
+            "React",
+            "WordPress",
+            "Nginx"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-08-01T16:36:00.945124"
+    },
+    {
+        "id": "20260801164106",
+        "date": "01 August 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Bootstrap",
+            "React",
+            "WordPress",
+            "Nginx"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-08-01T16:41:06.731207"
+    },
+    {
+        "id": "20260801164532",
+        "date": "01 August 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Bootstrap",
+            "React",
+            "WordPress",
+            "Nginx"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-08-01T16:45:32.040361"
+    },
+    {
+        "id": "20260801165549",
+        "date": "01 August 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Nginx",
+            "Bootstrap",
+            "React",
+            "WordPress"
+        ],
+        "ports": [
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-08-01T16:55:49.024807"
+    },
+    {
+        "id": "20260801165820",
+        "date": "01 August 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Nginx",
+            "Bootstrap",
+            "React",
+            "WordPress"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-08-01T16:58:20.380802"
+    },
+    {
+        "id": "20260801170831",
+        "date": "01 August 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "Bootstrap",
+            "WordPress",
+            "React",
+            "Nginx"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-08-01T17:08:31.304086"
+    },
+    {
+        "id": "20260801172026",
+        "date": "01 August 2026",
+        "website": "wordpress.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Let's Encrypt"
+        },
+        "security_headers": {
+            "score": 50,
+            "missing": [
+                "Content-Security-Policy",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "WordPress",
+            "Bootstrap",
+            "React",
+            "Nginx"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-08-01T17:20:26.262435"
+    },
+    {
+        "id": "20260801172633",
+        "date": "01 August 2026",
+        "website": "google.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services"
+        },
+        "security_headers": {
+            "score": 16,
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "No Framework Detected"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ],
+            "summary": "2 security issues detected"
+        },
+        "created_at": "2026-08-01T17:26:33.264641"
+    },
+    {
+        "id": "20260801172923",
+        "date": "01 August 2026",
+        "website": "google.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services"
+        },
+        "security_headers": {
+            "score": 16,
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "No Framework Detected"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ],
+            "summary": "2 security issues detected"
+        },
+        "created_at": "2026-08-01T17:29:23.456749"
+    },
+    {
+        "id": "20260801173737",
+        "date": "01 August 2026",
+        "website": "deepseek.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Amazon"
+        },
+        "security_headers": {
+            "score": 0,
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Frame-Options",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "React"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ],
+            "summary": "2 security issues detected"
+        },
+        "created_at": "2026-08-01T17:37:37.026050"
+    },
+    {
+        "id": "20260801174611",
+        "date": "01 August 2026",
+        "website": "picsart.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services"
+        },
+        "security_headers": {
+            "score": 33,
+            "missing": [
+                "Content-Security-Policy",
+                "X-Frame-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "React"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            },
+            {
+                "port": 8080,
+                "service": "HTTP Proxy",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            },
+            {
+                "port": 8080,
+                "service": "HTTP Proxy",
+                "risk": "Medium",
+                "reason": "Unknown exposed service",
+                "recommendation": "Review firewall rules"
+            }
+        ],
+        "vulnerabilities": [
+            "admin"
+        ],
+        "ai_report": {
+            "risk": "High",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Exposed Vulnerabilities Found",
+                    "severity": "High",
+                    "description": "Security weaknesses detected during scan."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "2 security issues detected"
+        },
+        "created_at": "2026-08-01T17:46:11.520548"
+    },
+    {
+        "id": "20260801175537",
+        "date": "01 August 2026",
+        "website": "geeksforgeeks.org",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "GoDaddy.com, Inc."
+        },
+        "security_headers": {
+            "score": 83,
+            "missing": [
+                "X-Frame-Options"
+            ]
+        },
+        "technologies": [
+            "React",
+            "WordPress",
+            "Nginx"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Low",
+            "issues": [],
+            "recommendations": [],
+            "summary": "0 security issues detected"
+        },
+        "created_at": "2026-08-01T17:55:37.674323"
+    },
+    {
+        "id": "20260801175840",
+        "date": "01 August 2026",
+        "website": "pinterest.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "DigiCert Inc"
+        },
+        "security_headers": {
+            "score": 83,
+            "missing": [
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "React",
+            "Vue.js"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [
+            ".env",
+            "admin",
+            "backup.zip",
+            "database.sql",
+            "config.php"
+        ],
+        "ai_report": {
+            "risk": "High",
+            "issues": [
+                {
+                    "title": "Exposed Vulnerabilities Found",
+                    "severity": "High",
+                    "description": "Security weaknesses detected during scan."
+                }
+            ],
+            "recommendations": [],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-08-01T17:58:40.665920"
+    },
+    {
+        "id": "20260801180342",
+        "date": "01 August 2026",
+        "website": "amazon.com",
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "DigiCert Inc"
+        },
+        "security_headers": {
+            "score": 16,
+            "missing": [
+                "Content-Security-Policy",
+                "X-Frame-Options",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "No Framework Detected"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ],
+            "summary": "1 security issues detected"
+        },
+        "created_at": "2026-08-01T18:03:42.935715"
+    },
+    {
+        "id": "20260801180709",
+        "date": "01 August 2026",
+        "website": {
+            "domain": "codebrigade.com",
+            "ip": "76.223.54.146",
+            "hosting": "Unknown",
+            "https": true
+        },
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "GoDaddy.com",
+            "expiry": "12 October 2026"
+        },
+        "security_headers": {
+            "score": 0,
+            "present": [],
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Frame-Options",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "No Framework Detected"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [
+            ".env",
+            "admin",
+            "backup.zip",
+            "database.sql",
+            "config.php"
+        ],
+        "ai_report": {
+            "risk": "High",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                },
+                {
+                    "title": "Exposed Vulnerabilities Found",
+                    "severity": "High",
+                    "description": "Security weaknesses detected during scan."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ]
+        },
+        "summary": {
+            "status": "Completed",
+            "risk": "High",
+            "issues": 3,
+            "duration": "2 sec"
+        },
+        "created_at": "2026-08-01T18:07:09.682703"
+    },
+    {
+        "id": "20260801180823",
+        "date": "01 August 2026",
+        "website": {
+            "domain": "godaddy.com",
+            "ip": "160.153.0.1",
+            "hosting": "AkamaiGHost",
+            "https": true
+        },
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services",
+            "expiry": "28 September 2026"
+        },
+        "security_headers": {
+            "score": 16,
+            "present": [
+                "X-Frame-Options"
+            ],
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "No Framework Detected"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            },
+            {
+                "port": 8080,
+                "service": "HTTP Proxy",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            },
+            {
+                "port": 8080,
+                "service": "HTTP Proxy",
+                "risk": "Medium",
+                "reason": "Unknown exposed service",
+                "recommendation": "Review firewall rules"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ]
+        },
+        "summary": {
+            "status": "Completed",
+            "risk": "Medium",
+            "issues": 2,
+            "duration": "2 sec"
+        },
+        "created_at": "2026-08-01T18:08:23.941754"
+    },
+    {
+        "id": "20260801180849",
+        "date": "01 August 2026",
+        "website": {
+            "domain": "google.com",
+            "ip": "142.250.122.102",
+            "hosting": "gws",
+            "https": true
+        },
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services",
+            "expiry": "21 September 2026"
+        },
+        "security_headers": {
+            "score": 16,
+            "present": [
+                "X-Frame-Options"
+            ],
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "No Framework Detected"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ]
+        },
+        "summary": {
+            "status": "Completed",
+            "risk": "Medium",
+            "issues": 2,
+            "duration": "2 sec"
+        },
+        "created_at": "2026-08-01T18:08:49.269040"
+    },
+    {
+        "id": "20260801181123",
+        "date": "01 August 2026",
+        "website": "google.com",
+        "ip": "172.217.26.110",
+        "hosting": "gws",
+        "https": true,
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services",
+            "expiry": "21 September 2026"
+        },
+        "security_headers": {
+            "score": 16,
+            "present": [
+                "X-Frame-Options"
+            ],
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "No Framework Detected"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ]
+        },
+        "summary": {
+            "status": "Completed",
+            "risk": "Medium",
+            "duration": "2 sec",
+            "issues": 2
+        },
+        "created_at": "2026-08-01T18:11:23.629609"
+    },
+    {
+        "id": "20260801181452",
+        "date": "01 August 2026",
+        "website": "google.com",
+        "ip": "172.217.26.110",
+        "hosting": "gws",
+        "https": true,
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services",
+            "expiry": "21 September 2026"
+        },
+        "security_headers": {
+            "score": 16,
+            "present": [
+                "X-Frame-Options"
+            ],
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "No Framework Detected"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ]
+        },
+        "summary": {
+            "status": "Completed",
+            "risk": "Medium",
+            "duration": "2 sec",
+            "issues": 2
+        },
+        "created_at": "2026-08-01T18:14:52.108838"
+    },
+    {
+        "id": "20260801181822",
+        "date": "01 August 2026",
+        "website": "google.com",
+        "ip": "192.178.158.101",
+        "hosting": "gws",
+        "https": true,
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services",
+            "expiry": "21 September 2026"
+        },
+        "security_headers": {
+            "score": 16,
+            "present": [
+                "X-Frame-Options"
+            ],
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "No Framework Detected"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ]
+        },
+        "summary": {
+            "status": "Completed",
+            "risk": "Medium",
+            "duration": "2 sec",
+            "issues": 2
+        },
+        "created_at": "2026-08-01T18:18:22.657732"
+    },
+    {
+        "id": "20260801182405",
+        "date": "01 August 2026",
+        "website": "google.com",
+        "ip": "142.250.122.101",
+        "hosting": "gws",
+        "https": true,
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services",
+            "expiry": "21 September 2026"
+        },
+        "security_headers": {
+            "score": 16,
+            "present": [
+                "X-Frame-Options"
+            ],
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "No Framework Detected"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ]
+        },
+        "summary": {
+            "status": "Completed",
+            "risk": "Medium",
+            "duration": "2 sec",
+            "issues": 2
+        },
+        "created_at": "2026-08-01T18:24:05.084072"
+    },
+    {
+        "id": "20260801182551",
+        "date": "01 August 2026",
+        "website": "google.com",
+        "ip": "142.250.122.113",
+        "hosting": "gws",
+        "https": true,
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services",
+            "expiry": "21 September 2026"
+        },
+        "security_headers": {
+            "score": 16,
+            "present": [
+                "X-Frame-Options"
+            ],
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "No Framework Detected"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ]
+        },
+        "summary": {
+            "status": "Completed",
+            "risk": "Medium",
+            "duration": "2 sec",
+            "issues": 2
+        },
+        "created_at": "2026-08-01T18:25:51.070169"
+    },
+    {
+        "id": "20260802152830",
+        "date": "02 August 2026",
+        "website": "youtube.com",
+        "ip": "192.178.193.93",
+        "hosting": "ESF",
+        "https": true,
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services",
+            "expiry": "21 September 2026"
+        },
+        "security_headers": {
+            "score": 83,
+            "present": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Frame-Options",
+                "X-Content-Type-Options",
+                "Permissions-Policy"
+            ],
+            "missing": [
+                "Referrer-Policy"
+            ]
+        },
+        "technologies": [
+            "React",
+            "Bootstrap",
+            "Vue.js"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Low",
+            "issues": [],
+            "recommendations": []
+        },
+        "summary": {
+            "status": "Completed",
+            "risk": "Low",
+            "duration": "2 sec",
+            "issues": 0
+        },
+        "created_at": "2026-08-02T15:28:30.063085"
+    },
+    {
+        "id": "20260802153323",
+        "date": "02 August 2026",
+        "website": "flipkart.com",
+        "ip": "103.243.32.90",
+        "hosting": "Unknown",
+        "https": true,
+        "security_score": 95,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "GlobalSign nv-sa",
+            "expiry": "13 January 2027"
+        },
+        "security_headers": {
+            "score": 0,
+            "present": [],
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Frame-Options",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "No Framework Detected"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ]
+        },
+        "summary": {
+            "status": "Completed",
+            "risk": "Medium",
+            "duration": "2 sec",
+            "issues": 2
+        },
+        "created_at": "2026-08-02T15:33:23.228783"
+    },
+    {
+        "id": "20260802165421",
+        "date": "02 August 2026",
+        "website": "google.com",
+        "ip": "142.250.122.113",
+        "hosting": "gws",
+        "https": true,
+        "security_score": 62,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services",
+            "expiry": "21 September 2026"
+        },
+        "security_headers": {
+            "score": 16,
+            "present": [
+                "X-Frame-Options"
+            ],
+            "missing": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "No Framework Detected"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Missing HSTS Header",
+                    "severity": "Medium",
+                    "description": "HTTPS downgrade attacks may be possible."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header.",
+                "Enable Strict-Transport-Security header."
+            ]
+        },
+        "summary": {
+            "status": "Completed",
+            "risk": "Medium",
+            "duration": "2 sec",
+            "issues": 2
+        },
+        "created_at": "2026-08-02T16:54:21.532654"
+    },
+    {
+        "id": "20260802165456",
+        "date": "02 August 2026",
+        "website": "youtube.com",
+        "ip": "142.250.143.190",
+        "hosting": "ESF",
+        "https": true,
+        "security_score": 90,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services",
+            "expiry": "21 September 2026"
+        },
+        "security_headers": {
+            "score": 83,
+            "present": [
+                "Content-Security-Policy",
+                "Strict-Transport-Security",
+                "X-Frame-Options",
+                "X-Content-Type-Options",
+                "Permissions-Policy"
+            ],
+            "missing": [
+                "Referrer-Policy"
+            ]
+        },
+        "technologies": [
+            "React",
+            "Bootstrap"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Low",
+            "issues": [],
+            "recommendations": []
+        },
+        "summary": {
+            "status": "Completed",
+            "risk": "Low",
+            "duration": "2 sec",
+            "issues": 0
+        },
+        "created_at": "2026-08-02T16:54:56.459025"
+    },
+    {
+        "id": "20260802165521",
+        "date": "02 August 2026",
+        "website": "picsart.com",
+        "ip": "162.159.136.44",
+        "hosting": "cloudflare",
+        "https": true,
+        "security_score": 45,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "Google Trust Services",
+            "expiry": "29 October 2026"
+        },
+        "security_headers": {
+            "score": 33,
+            "present": [
+                "Strict-Transport-Security",
+                "X-Content-Type-Options"
+            ],
+            "missing": [
+                "Content-Security-Policy",
+                "X-Frame-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "React"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            },
+            {
+                "port": 8080,
+                "service": "HTTP Proxy",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            },
+            {
+                "port": 8080,
+                "service": "HTTP Proxy",
+                "risk": "Medium",
+                "reason": "Unknown exposed service",
+                "recommendation": "Review firewall rules"
+            }
+        ],
+        "vulnerabilities": [
+            "admin"
+        ],
+        "ai_report": {
+            "risk": "High",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                },
+                {
+                    "title": "Exposed Vulnerabilities Found",
+                    "severity": "High",
+                    "description": "Security weaknesses detected during scan."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ]
+        },
+        "summary": {
+            "status": "Completed",
+            "risk": "High",
+            "duration": "2 sec",
+            "issues": 2
+        },
+        "created_at": "2026-08-02T16:55:21.448750"
+    },
+    {
+        "id": "20260802165558",
+        "date": "02 August 2026",
+        "website": "amazon.com",
+        "ip": "98.87.170.71",
+        "hosting": "Server",
+        "https": true,
+        "security_score": 62,
+        "ssl_status": {
+            "valid": true,
+            "issuer": "DigiCert Inc",
+            "expiry": "18 November 2026"
+        },
+        "security_headers": {
+            "score": 16,
+            "present": [
+                "Strict-Transport-Security"
+            ],
+            "missing": [
+                "Content-Security-Policy",
+                "X-Frame-Options",
+                "X-Content-Type-Options",
+                "Referrer-Policy",
+                "Permissions-Policy"
+            ]
+        },
+        "technologies": [
+            "No Framework Detected"
+        ],
+        "ports": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "status": "Open"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "status": "Open"
+            }
+        ],
+        "port_analysis": [
+            {
+                "port": 80,
+                "service": "HTTP",
+                "risk": "Medium",
+                "reason": "HTTP traffic is not encrypted",
+                "recommendation": "Enable HTTPS"
+            },
+            {
+                "port": 443,
+                "service": "HTTPS",
+                "risk": "Low",
+                "reason": "HTTPS encrypted communication",
+                "recommendation": "Keep SSL certificate updated"
+            }
+        ],
+        "vulnerabilities": [],
+        "ai_report": {
+            "risk": "Medium",
+            "issues": [
+                {
+                    "title": "Missing Content-Security-Policy",
+                    "severity": "High",
+                    "description": "Website may be vulnerable to Cross Site Scripting (XSS) attacks."
+                }
+            ],
+            "recommendations": [
+                "Implement Content-Security-Policy header."
+            ]
+        },
+        "summary": {
+            "status": "Completed",
+            "risk": "Medium",
+            "duration": "2 sec",
+            "issues": 1
+        },
+        "created_at": "2026-08-02T16:55:58.410549"
+    }
+]
