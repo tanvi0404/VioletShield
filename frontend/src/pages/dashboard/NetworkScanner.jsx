@@ -1,68 +1,43 @@
 import { useState } from "react";
-
 import { scanNetwork } from "../../api/scannerApi";
-
 import NetworkAICard from "../../components/dashboard/NetworkAICard";
-
 import DomainInfoCard from "../../components/dashboard/DomainInfoCard";
-
 import TechnologyCard from "../../components/dashboard/TechnologyCard";
-
 import SecurityHeadersCard from "../../components/dashboard/SecurityHeadersCard";
-
+import AuthorizationNotice from "../../components/common/AuthorizationNotice";
 
 const NetworkScanner = () => {
+  const [domain, setDomain] = useState("");
+  const [authorized, setAuthorized] = useState(false);
+  const [ports, setPorts] = useState([]);
+  const [analysis, setAnalysis] = useState([]);
+  const [technologies, setTechnologies] = useState([]);
+  const [securityHeaders, setSecurityHeaders] = useState(null);
+  const [aiReport, setAiReport] = useState(null);
+  const [loading, setLoading] = useState(false);
+  const [domainInfo, setDomainInfo] = useState(null);
+  const [networkScore, setNetworkScore] = useState(0);
 
+  const [stats, setStats] = useState({
+    high: 0,
+    medium: 0,
+    low: 0,
+  });
 
-const [domain,setDomain] = useState("");
+  const handleScan = async () => {
+    if (!domain) {
+      alert("Please enter domain");
+      return;
+    }
 
-const [ports,setPorts] = useState([]);
+    if (!authorized) {
+      alert("Please confirm authorization before scanning.");
+      return;
+    }
 
-const [analysis,setAnalysis] = useState([]);
+    try {
+      setLoading(true);
 
-const [technologies,setTechnologies] = useState([]);
-
-const [securityHeaders,setSecurityHeaders] = useState(null);
-
-const [aiReport,setAiReport] = useState(null);
-
-const [loading,setLoading] = useState(false);
-
-const [domainInfo,setDomainInfo] = useState(null);
-
-const [networkScore,setNetworkScore] = useState(0);
-
-
-
-const [stats,setStats] = useState({
-
-high:0,
-medium:0,
-low:0
-
-});
-
-
-
-
-
-const handleScan = async()=>{
-
-
-if(!domain){
-
-alert("Please enter domain");
-
-return;
-
-}
-
-
-
-try{
-
-
-setLoading(true);
 
 
 setPorts([]);
@@ -386,46 +361,20 @@ focus:border-purple-500
 
 
 
-<button
+        <button
+          onClick={handleScan}
+          disabled={loading || !authorized}
+          className="rounded-xl bg-purple-600 px-8 font-bold text-white transition hover:bg-purple-700 disabled:cursor-not-allowed disabled:opacity-50"
+        >
+          {loading ? "Scanning..." : "Scan Ports"}
+        </button>
+      </div>
 
-onClick={handleScan}
+      <div className="mt-4">
+        <AuthorizationNotice checked={authorized} onChange={setAuthorized} />
+      </div>
+    </div>
 
-className="
-rounded-xl
-bg-purple-600
-px-8
-font-bold
-text-white
-hover:bg-purple-700
-"
-
->
-
-
-{
-
-loading
-
-?
-
-"Scanning..."
-
-:
-
-"Scan Ports"
-
-}
-
-
-</button>
-
-
-
-</div>
-
-
-
-</div>
 
 
 

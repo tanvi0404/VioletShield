@@ -1,5 +1,6 @@
 import { useState } from "react";
-
+import { motion, AnimatePresence } from "framer-motion";
+import { AlertTriangle, ShieldAlert } from "lucide-react";
 
 import ScannerHero from "../../components/dashboard/ScannerHero";
 import ScannerInput from "../../components/dashboard/ScannerInput";
@@ -15,20 +16,17 @@ import SSLCard from "../../components/dashboard/SSLCard";
 import ReportCard from "../../components/dashboard/ReportCard";
 import CookieSecurityCard from "../../components/dashboard/CookieSecurityCard";
 import DomainInfoCard from "../../components/dashboard/DomainInfoCard";
+import DirectoryScannerCard from "../../components/dashboard/DirectoryScannerCard";
+import NiktoMisconfigCard from "../../components/dashboard/NiktoMisconfigCard";
 import { scanWebsite } from "../../api/scannerApi";
-
-
-
-
 
 const WebsiteScanner = () => {
 
-
-
 const [loading,setLoading] = useState(false);
-
-
+const [errorMessage, setErrorMessage] = useState("");
 const [domainInfo,setDomainInfo] = useState(null);
+
+
 
 
 const [scanData,setScanData] = useState({
@@ -133,14 +131,15 @@ issues:0
 
 },
 
-
-
+gobuster:null,
+nikto:null,
 
 report:null
 
 
 
 });
+
 
 
 
@@ -175,48 +174,30 @@ url
 
 
 
-const result = await scanWebsite(url);
+    setErrorMessage("");
 
-setDomainInfo(
-    result.domain_information
-);
+    const result = await scanWebsite(url);
 
+    setDomainInfo(
+        result.domain_information
+    );
 
+    console.log(
+    "SCAN RESULT:",
+    result
+    );
 
+    // COOKIE DEBUG
+    console.log(
+    "COOKIE DATA:",
+    result.cookies
+    );
 
+    if(result.error){
+        setErrorMessage(result.error);
+        return;
+    }
 
-console.log(
-"SCAN RESULT:",
-result
-);
-
-
-
-
-
-
-// COOKIE DEBUG
-
-console.log(
-"COOKIE DATA:",
-result.cookies
-);
-
-
-
-
-
-
-
-if(result.error){
-
-
-alert(result.error);
-
-return;
-
-
-}
 
 
 
@@ -626,13 +607,15 @@ result.report
 
 ||
 
-null
+null,
 
-
-
-
+gobuster: result.gobuster || null,
+nikto: result.nikto || null,
+risk_score_details: result.risk_score_details || null
 
 };
+
+
 
 
 
@@ -665,74 +648,46 @@ setScanData(formattedData);
 
 
 }
-
 catch(error){
-
-
-
-console.error(
-
-"SCAN ERROR:",
-
-error
-
-);
-
-
-
-
-alert(
-"Unable to connect to backend"
-);
-
-
-
+    console.error("SCAN ERROR:", error);
+    const msg = error.response?.data?.error || error.response?.data?.msg || error.message || "Failed to communicate with Flask backend.";
+    setErrorMessage(msg);
 }
-
-
-
 finally{
-
-
-setLoading(false);
-
-
+    setLoading(false);
 }
-
-
-
 };
 
-
-
-
-
-
-
-
-
 return (
-
-
 <div className="space-y-8">
+    <ScannerHero />
 
+    <ScannerInput
+        onScan={handleScan}
+        loading={loading}
+    />
 
-
-
-
-<ScannerHero />
-
-
-
-
-
-<ScannerInput
-
-onScan={handleScan}
-
-loading={loading}
-
-/>
+    <AnimatePresence>
+      {errorMessage && (
+        <motion.div
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          exit={{ opacity: 0, y: -8 }}
+          className="rounded-2xl border border-rose-500/40 bg-rose-950/30 p-4 text-sm text-rose-300 flex items-center justify-between gap-3 shadow-lg backdrop-blur-md"
+        >
+          <div className="flex items-center gap-3">
+            <AlertTriangle size={18} className="shrink-0 text-rose-400" />
+            <span>{errorMessage}</span>
+          </div>
+          <button
+            onClick={() => setErrorMessage("")}
+            className="rounded-lg px-2.5 py-1 text-xs font-semibold text-rose-400 hover:bg-rose-500/10 hover:text-rose-200 transition"
+          >
+            Dismiss
+          </button>
+        </motion.div>
+      )}
+    </AnimatePresence>
 
 
 
@@ -742,10 +697,10 @@ loading={loading}
 
 
 <SecurityScoreCard
-
-score={scanData.score}
-
+  score={scanData.score}
+  riskDetails={scanData.risk_score_details}
 />
+
 
 
 
@@ -893,6 +848,15 @@ scanData.ssl_analysis
 
 />
 
+{/* PHASE 7 ADVANCED WEB VULNERABILITY AUDIT */}
+{scanData.gobuster && (
+  <DirectoryScannerCard gobusterData={scanData.gobuster} />
+)}
+
+{scanData.nikto && (
+  <NiktoMisconfigCard niktoData={scanData.nikto} />
+)}
+
 <DomainInfoCard
 domainInfo={domainInfo}
 />
@@ -901,6 +865,7 @@ domainInfo={domainInfo}
 
 
 </div>
+
 
 
 );

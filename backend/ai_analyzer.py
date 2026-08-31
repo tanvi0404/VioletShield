@@ -38,8 +38,9 @@ def analyze_security(scan_data):
 
         risk_level = max(
             risk_level,
-            3
+            2
         )
+
 
 
 

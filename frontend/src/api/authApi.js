@@ -1,38 +1,20 @@
-import axios from "axios";
+﻿import axios from "axios";
 
+const API_BASE_URL = "http://127.0.0.1:5000/api";
 
-const API = axios.create({
-
-    baseURL:"http://localhost:5000/api"
-
-});
-
-
-
-// SIGNUP API
-
-export const signupUser = (data)=>{
-
-    return API.post("/auth/signup",data);
-
+export const loginUser = async (email, password) => {
+  const response = await axios.post(`${API_BASE_URL}/login`, {
+    email,
+    password,
+  });
+  return response.data;
 };
 
-
-
-// LOGIN API
-
-export const loginUser = (data)=>{
-
-    return API.post("/auth/login",data);
-
-};
-
-
-
-// VERIFY OTP
-
-export const verifyOTP = (data)=>{
-
-    return API.post("/auth/verify-otp",data);
-
+export const registerUser = async (name, email, password) => {
+  const response = await axios.post(`${API_BASE_URL}/register`, {
+    name,
+    email,
+    password,
+  });
+  return response.data;
 };

@@ -1,218 +1,59 @@
+from tools.risk_engine import compute_composite_risk_score
+
 def calculate_security_score(
-        ssl,
-        headers,
-        cookies,
-        ports,
-        vulnerabilities,
-        ai_analysis
+    ssl=None,
+    headers=None,
+    cookies=None,
+    ports=None,
+    vulnerabilities=None,
+    ai_analysis=None,
+    cves=None,
+    exploits=None,
+    threat_intel=None,
+    nikto=None,
+    gobuster=None,
+    **kwargs
 ):
-
-
-    score = 100
-
-
-
-    # ================= SSL CHECK =================
-
-    if not ssl.get("valid", False):
-
-        score -= 20
-
-
-    days = ssl.get(
-        "daysRemaining",
-        999
-    )
-
-
-    if days < 30:
-
-        score -= 8
-
-    elif days < 90:
-
-        score -= 3
-
-
-
-
-    # ================= SECURITY HEADERS =================
-
-
-    missing_headers = headers.get(
-        "missing",
-        []
-    )
-
-
-    for header in missing_headers:
-
-
-        if header == "Content-Security-Policy":
-
-            score -= 5
-
-
-        elif header == "Strict-Transport-Security":
-
-            score -= 5
-
-
-        elif header == "X-Frame-Options":
-
-            score -= 3
-
-
-        elif header == "X-Content-Type-Options":
-
-            score -= 2
-
-
-        elif header == "Referrer-Policy":
-
-            score -= 2
-
-
-        elif header == "Permissions-Policy":
-
-            score -= 1
-
-
-
-
-
-    # ================= COOKIE SECURITY =================
-
-
-    missing_httponly = cookies.get(
-        "missing_httponly",
-        []
-    )
-
-
-    missing_secure = cookies.get(
-        "missing_secure",
-        []
-    )
-
-
-    missing_samesite = cookies.get(
-        "missing_samesite",
-        []
-    )
-
-
-
-    # Limited penalty (realistic)
-
-    if len(missing_httponly) > 0:
-
-        score -= 5
-
-
-
-    if len(missing_secure) > 0:
-
-        score -= 5
-
-
-
-    if len(missing_samesite) > 0:
-
-        score -= 3
-
-
-
-
-
-
-    # ================= PORT ANALYSIS =================
-
-
-    for port in ports:
-
-
-        risk = port.get(
-            "risk",
-            ""
-        )
-
-
-        if risk == "High":
-
-            score -= 8
-
-
-        elif risk == "Medium":
-
-            score -= 3
-
-
-
-
-
-
-    # ================= VULNERABILITIES =================
-
-
-    for vuln in vulnerabilities:
-
-
-        severity = vuln.get(
-            "severity",
-            "Medium"
-        )
-
-
-        if severity == "High":
-
-            score -= 10
-
-
-        elif severity == "Medium":
-
-            score -= 5
-
-
-        else:
-
-            score -= 2
-
-
-
-
-
-
-    # ================= AI RISK =================
-
-
-    risk = ai_analysis.get(
-        "risk",
-        "Low"
-    )
-
-
-    if risk == "High":
-
-        score -= 10
-
-
-    elif risk == "Medium":
-
-        score -= 5
-
-
-
-
-
-
-    # ================= FINAL SCORE =================
-
-
-    score = max(
-        0,
-        min(score,100)
-    )
-
-
-    return score
+    """
+    Phase 10: AI Risk Scoring Engine integration.
+    
+    Computes a composite security score (0 to 100) across 4 weighted pillars:
+      1. Network & Service Exposure (25 pts)
+      2. Vulnerabilities, CVEs & ExploitDB PoCs (35 pts)
+      3. Web Application & Cryptography Hardening (25 pts)
+      4. Threat Intelligence & Reputation (15 pts)
+      
+    Maintains 100% backward compatibility with all existing scan routes and returns an integer score.
+    """
+    scan_data = {
+        "ssl": ssl or {},
+        "headers": headers or {},
+        "cookies": cookies or {},
+        "ports": ports or [],
+        "vulnerabilities": vulnerabilities or [],
+        "ai_analysis": ai_analysis or {},
+        "cves": cves or [],
+        "exploits": exploits or [],
+        "threat_intel": threat_intel or {},
+        "nikto": nikto or {},
+        "gobuster": gobuster or {}
+    }
+    
+    # Merge any additional kwargs
+    scan_data.update(kwargs)
+
+    result = compute_composite_risk_score(scan_data)
+    return int(result["security_score"])
+
+
+def evaluate_detailed_risk_score(scan_data):
+    """
+    Returns the complete Phase 10 structured risk assessment including:
+      - security_score (0-100)
+      - grade (A+, A, B, C, D, F)
+      - risk_level (Critical, High, Medium, Low)
+      - pillars breakdown
+      - main_reasons
+      - priority_remediations
+    """
+    return compute_composite_risk_score(scan_data)

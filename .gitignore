@@ -1,7 +1,14 @@
 # Python
 backend/venv/
 backend/__pycache__/
+*/__pycache__/
 *.pyc
+*.db
+*.sqlite
+*.sqlite3
+
+# Generated Reports & Temp
+backend/reports/*.pdf
 
 # React
 frontend/node_modules/
@@ -9,9 +16,11 @@ frontend/dist/
 
 # Environment
 .env
+backend/.env
 
 # VS Code
 .vscode/
 
 # OS
 .DS_Store
+Thumbs.db

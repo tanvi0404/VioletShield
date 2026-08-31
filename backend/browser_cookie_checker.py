@@ -38,15 +38,13 @@ def check_browser_cookies(url):
 
             page.goto(
                 url,
-                timeout=60000,
+                timeout=8000,
                 wait_until="domcontentloaded"
             )
 
-
-
             # wait for JS cookies
+            time.sleep(1)
 
-            time.sleep(5)
 
 
 

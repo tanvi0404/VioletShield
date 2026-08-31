@@ -1,851 +1,202 @@
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
-
+﻿import React, { useEffect, useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import {
+  FileText,
+  Download,
+  Search,
+  ExternalLink,
+  ShieldCheck,
+  AlertTriangle,
+  Calendar,
+  Globe,
+  Loader2,
+  ChevronDown,
+  ChevronUp,
+  Lock,
+  Layers,
+  Filter
+} from "lucide-react";
+import { getReports, downloadReportPdf } from "../../api/scannerApi";
 
 const Reports = () => {
+  const [reports, setReports] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedRisk, setSelectedRisk] = useState("ALL");
+  const [expandedReportId, setExpandedReportId] = useState(null);
 
+  useEffect(() => {
+    fetchReports();
+  }, []);
 
-  const [reports,setReports] = useState([]);
-
-
-
-useEffect(()=>{
-
-const token = localStorage.getItem("token");
-
-
-fetch("http://127.0.0.1:5000/api/my-scans",{
-
-headers:{
-    "Authorization":`Bearer ${token}`
-}
-
-})
-
-.then(res=>res.json())
-
-.then(data=>{
-
-console.log("USER SCANS:",data);
-
-setReports(data.reverse());
-
-})
-
-.catch(err=>{
-
-console.log("REPORT FETCH ERROR:",err);
-
-});
-
-
-},[]);
-
-
-
-
-
-  const riskColor=(risk)=>{
-
-
-    if(risk==="High")
-
-      return "text-red-400 bg-red-500/20 border-red-500/40";
-
-
-    if(risk==="Medium")
-
-      return "text-yellow-400 bg-yellow-500/20 border-yellow-500/40";
-
-
-    return "text-green-400 bg-green-500/20 border-green-500/40";
-
-
+  const fetchReports = async () => {
+    try {
+      setLoading(true);
+      const data = await getReports();
+      setReports(Array.isArray(data) ? data.reverse() : []);
+    } catch (err) {
+      console.error("REPORT FETCH ERROR:", err);
+    } finally {
+      setLoading(false);
+    }
   };
 
-
-
-
-return (
-
-<div className="space-y-8">
-
-
-
-<motion.h1
-
-initial={{opacity:0,y:-20}}
-
-animate={{opacity:1,y:0}}
-
-className="
-text-3xl
-font-bold
-text-white
-"
-
->
-
-🛡️ Security Reports
-
-</motion.h1>
-
-
-
-
-
-
-{
-
-reports.length===0 ?
-
-
-<div className="
-rounded-xl
-border
-border-zinc-800
-bg-zinc-950
-p-5
-text-zinc-400
-">
-
-No reports generated yet
-
-</div>
-
-
-
-:
-
-
-reports.map((report,index)=>(
-
-
-
-<motion.div
-
-key={index}
-
-initial={{
-opacity:0,
-y:30
-}}
-
-animate={{
-opacity:1,
-y:0
-}}
-
-transition={{
-delay:index*0.1
-}}
-
-whileHover={{
-scale:1.01
-}}
-
-className="
-rounded-2xl
-border
-border-zinc-800
-bg-zinc-950
-p-5
-"
-
-
-
->
-
-
-
-
-
-{/* HEADER */}
-
-
-
-<div className="
-rounded-xl
-border
-border-purple-500/30
-bg-purple-900/10
-p-4
-flex
-justify-between
-items-center
-">
-
-
-<div>
-
-
-<h2 className="
-text-3xl
-font-bold
-text-purple-400
-drop-shadow-[0_0_12px_rgba(168,85,247,0.7)]
-">
-
-🌐 {
-    typeof report.website === "object"
-    ? report.website
-    : report.website || "Unknown"
-}
-
-</h2>
-
-
-
-<p className="
-mt-2
-text-sm
-text-zinc-400
-">
-
-Generated:
-
-<span className="ml-2 text-white">
-
-{report.created_at}
-
-</span>
-
-</p>
-
-
-</div>
-
-
-
-
-<div className={`
-
-px-4
-py-1.5
-rounded-full
-border
-font-semibold
-
-${riskColor(report.risk)}
-
-`}>
-
-⚠ {report.ai_report?.risk}
-
-</div>
-
-
-
-</div>
-
-
-
-
-
-
-
-
-
-{/* CARDS */}
-
-
-
-<div className="
-mt-5
-grid
-md:grid-cols-3
-gap-4
-">
-
-
-<Card
-
-title="Security Score"
-
-value={`${report.security_score}%`}
-
-/>
-
-
-
-<Card
-
-title="Issues Found"
-
-value={report.ai_report?.issues?.length || 0}
-
-/>
-
-
-
-
-<Card
-
-title="SSL"
-
-value={
-report.ssl_status?.valid
-?
-"Valid"
-:
-"Invalid"
-}
-
-/>
-
-
-</div>
-
-
-
-
-
-
-
-
-
-{/* TECHNOLOGY */}
-
-
-
-{
-
-report.technologies?.length>0 &&
-
-
-<Section title="⚙️ Technologies">
-
-
-<div className="
-flex
-flex-wrap
-gap-2
-">
-
-
-{
-
-report.technologies.map((tech,i)=>(
-
-
-<span
-
-key={i}
-
-className="
-rounded-full
-bg-purple-500/20
-border
-border-purple-500/30
-px-3
-py-1
-text-sm
-text-purple-300
-"
-
->
-
-{tech}
-
-</span>
-
-
-
-))
-
-}
-
-
-</div>
-
-
-</Section>
-
-
-}
-
-
-
-
-
-
-
-
-
-{/* PORTS */}
-
-
-
-{
-
-report.ports?.length>0 &&
-
-
-<Section title="🌐 Network Exposure">
-
-
-<div className="
-grid
-md:grid-cols-2
-gap-4
-">
-
-
-{
-
-
-report.ports.map((port,i)=>(
-
-
-<motion.div
-
-key={i}
-
-whileHover={{
-scale:1.02
-}}
-
-className="
-rounded-xl
-border
-border-green-500/30
-bg-green-500/10
-p-4
-"
-
->
-
-
-<h3 className="
-text-xl
-font-bold
-text-green-400
-">
-
-🟢 Port {port.port}
-
-</h3>
-
-
-
-<p className="
-mt-2
-text-white
-">
-
-Service:
-
-<span className="
-ml-2
-text-green-300
-">
-
-{port.service}
-
-</span>
-
-
-</p>
-
-
-
-
-<p className="
-mt-2
-text-green-400
-font-semibold
-">
-
-{port.status}
-
-</p>
-
-
-
-</motion.div>
-
-
-
-))
-
-
-}
-
-
-
-</div>
-
-
-</Section>
-
-
-}
-
-
-
-
-
-
-
-
-
-{/* PORT ANALYSIS */}
-
-
-
-{
-
-report.port_analysis?.length>0 &&
-
-
-<Section title="🔍 Port Security Analysis">
-
-
-{
-
-
-report.port_analysis.map((item,i)=>(
-
-
-<div
-
-key={i}
-
-className="
-mt-4
-rounded-xl
-border
-border-purple-500/20
-bg-black
-p-4
-"
-
->
-
-
-<h3 className="
-text-purple-400
-font-bold
-">
-
-Port {item.port} - {item.service}
-
-</h3>
-
-
-
-<p className="text-white mt-2">
-
-Risk:
-
-<span className="
-ml-2
-text-yellow-400
-">
-
-{item.risk}
-
-</span>
-
-</p>
-
-
-
-
-<p className="
-mt-2
-text-zinc-300
-">
-
-{item.reason}
-
-</p>
-
-
-
-
-<p className="
-mt-2
-text-purple-300
-">
-
-Recommendation:
-
-<span className="text-white ml-2">
-
-{item.recommendation}
-
-</span>
-
-
-</p>
-
-
-
-</div>
-
-
-))
-
-
-}
-
-
-
-</Section>
-
-
-}
-
-
-
-
-
-
-
-
-
-
-{/* SSL */}
-
-
-
-<Section title="🔐 SSL Security">
-
-
-<div className="
-rounded-xl
-bg-blue-500/10
-border
-border-blue-500/30
-p-4
-">
-
-
-<p className="text-white">
-
-Status:
-
-<span className="
-ml-2
-text-green-400
-font-bold
-">
-
-{
-report.ssl_status?.valid
-?
-"Valid"
-:
-"Invalid"
-}
-
-</span>
-
-
-</p>
-
-
-
-<p className="
-mt-2
-text-zinc-300
-">
-
-Issuer:
-
-<span className="text-white ml-2">
-
-{report.ssl_status?.issuer}
-
-</span>
-
-</p>
-
-
-</div>
-
-
-</Section>
-
-
-
-
-
-
-
-
-
-{/* AI */}
-
-
-
-<Section title="🤖 AI Security Report">
-
-
-<div className="
-rounded-xl
-bg-purple-950/40
-border
-border-purple-500/30
-p-4
-">
-
-
-<p className="text-purple-300">
-
-{report.ai_report?.risk || "Unknown"}
-
-</p>
-
-
-
-{
-
-report.ai_report?.recommendations?.map((r,i)=>(
-
-
-<p
-
-key={i}
-
-className="
-mt-2
-text-zinc-300
-"
-
->
-
-⚡ {r}
-
-</p>
-
-
-))
-
-
-}
-
-
-
-</div>
-
-
-</Section>
-
-
-
-
-
-
-
-</motion.div>
-
-
-))
-
-
-}
-
-
-
-</div>
-
-
-);
-
-
+  const filteredReports = reports.filter((r) => {
+    const website = (r.website || "").toLowerCase();
+    const queryMatch = website.includes(searchQuery.toLowerCase());
+    const riskMatch = selectedRisk === "ALL" || (r.risk || "").toUpperCase() === selectedRisk;
+    return queryMatch && riskMatch;
+  });
+
+  const getRiskBadge = (risk) => {
+    switch (risk) {
+      case "High":
+        return "border-rose-500/40 bg-rose-500/15 text-rose-300";
+      case "Medium":
+        return "border-amber-500/40 bg-amber-500/15 text-amber-300";
+      case "Low":
+      default:
+        return "border-emerald-500/40 bg-emerald-500/15 text-emerald-300";
+    }
+  };
+
+  return (
+    <div className="space-y-8 pb-12">
+      {/* HEADER */}
+      <motion.div
+        initial={{ opacity: 0, y: -10 }}
+        animate={{ opacity: 1, y: 0 }}
+        className="rounded-3xl border border-purple-500/30 bg-gradient-to-br from-purple-950/40 via-zinc-950 to-black p-8 shadow-2xl backdrop-blur-xl"
+      >
+        <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <div className="inline-flex items-center gap-2 rounded-full border border-purple-500/30 bg-purple-500/10 px-3.5 py-1 text-xs font-semibold uppercase tracking-wider text-purple-300">
+              <FileText size={14} />
+              Audit Repository
+            </div>
+            <h1 className="mt-3 text-3xl font-black tracking-tight text-white md:text-4xl">
+              Security Reports & Compliance Archives
+            </h1>
+            <p className="mt-2 text-sm text-zinc-400">
+              Review historical penetration tests, download generated executive PDF reports, and track remediation over time.
+            </p>
+          </div>
+          <span className="rounded-2xl border border-zinc-800 bg-black/60 px-5 py-3 font-mono text-xs text-purple-300 text-center">
+            {reports.length} Reports Archived
+          </span>
+        </div>
+      </motion.div>
+
+      {/* FILTER & SEARCH BAR */}
+      <div className="flex flex-col gap-4 rounded-2xl border border-zinc-800 bg-zinc-950 p-4 sm:flex-row sm:items-center sm:justify-between">
+        <div className="relative flex-1">
+          <Search size={18} className="absolute left-4 top-1/2 -translate-y-1/2 text-zinc-400" />
+          <input
+            type="text"
+            placeholder="Search reports by target domain..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full rounded-xl border border-zinc-800 bg-zinc-900/80 py-2.5 pl-11 pr-4 text-xs text-white outline-none focus:border-purple-500"
+          />
+        </div>
+
+        {/* RISK FILTER PILLS */}
+        <div className="flex items-center gap-2 text-xs">
+          <Filter size={14} className="text-zinc-500" />
+          {["ALL", "HIGH", "MEDIUM", "LOW"].map((risk) => (
+            <button
+              key={risk}
+              onClick={() => setSelectedRisk(risk)}
+              className={`rounded-lg px-3 py-1.5 font-semibold transition ${
+                selectedRisk === risk
+                  ? "bg-purple-600 text-white shadow-md shadow-purple-600/30"
+                  : "bg-zinc-900 text-zinc-400 hover:bg-zinc-800 hover:text-white"
+              }`}
+            >
+              {risk}
+            </button>
+          ))}
+        </div>
+      </div>
+
+      {/* REPORTS LIST */}
+      {loading ? (
+        <div className="py-20 text-center space-y-3">
+          <Loader2 size={36} className="animate-spin mx-auto text-purple-400" />
+          <p className="text-sm text-zinc-400 font-mono">Retrieving security reports from database...</p>
+        </div>
+      ) : filteredReports.length === 0 ? (
+        <div className="rounded-3xl border border-zinc-800 bg-zinc-950 p-12 text-center space-y-3">
+          <FileText size={48} className="mx-auto text-zinc-600" />
+          <h3 className="text-base font-bold text-white">No Security Reports Found</h3>
+          <p className="text-xs text-zinc-500 max-w-sm mx-auto">
+            {searchQuery || selectedRisk !== "ALL"
+              ? "No reports match your search or filter criteria."
+              : "Launch your first scan to generate and persist detailed vulnerability audit reports."}
+          </p>
+        </div>
+      ) : (
+        <div className="space-y-4">
+          {filteredReports.map((report, idx) => {
+            const isExpanded = expandedReportId === report.id;
+            const pdfUrl = downloadReportPdf(report.id);
+
+            return (
+              <motion.div
+                key={report.id || idx}
+                initial={{ opacity: 0, y: 15 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: idx * 0.04 }}
+                className="group rounded-3xl border border-zinc-800 bg-zinc-950/90 p-6 transition-all hover:border-purple-500/40 hover:shadow-xl hover:shadow-purple-500/5"
+              >
+                <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+                  <div className="flex items-center gap-4">
+                    {/* SCORE AVATAR */}
+                    <div className="flex h-14 w-14 items-center justify-center rounded-2xl bg-zinc-900 border border-zinc-800 font-mono font-black text-lg text-purple-400">
+                      {report.security_score ?? report.score ?? 0}%
+                    </div>
+
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2">
+                        <Globe size={16} className="text-purple-400" />
+                        <h3 className="font-bold text-white text-base">
+                          {report.website}
+                        </h3>
+                        <span className={`rounded-md border px-2 py-0.5 text-[11px] font-bold ${getRiskBadge(report.risk)}`}>
+                          {report.risk || "Low"} Risk
+                        </span>
+                      </div>
+                      <div className="flex items-center gap-3 text-xs text-zinc-500 font-mono">
+                        <span className="flex items-center gap-1">
+                          <Calendar size={13} />
+                          {report.created_at ? new Date(report.created_at).toLocaleString() : "Recent"}
+                        </span>
+                        <span>•</span>
+                        <span>ID: #{report.id || idx + 1}</span>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* ACTIONS */}
+                  <div className="flex items-center gap-3 self-end sm:self-center">
+                    <a
+                      href={pdfUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2 rounded-xl bg-purple-600/20 border border-purple-500/40 px-4 py-2.5 text-xs font-semibold text-purple-300 transition hover:bg-purple-600 hover:text-white"
+                    >
+                      <Download size={14} />
+                      <span>Download PDF</span>
+                    </a>
+                  </div>
+                </div>
+              </motion.div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
 };
-
-
-
-
-
-
-
-const Card=({title,value})=>(
-
-
-<motion.div
-
-whileHover={{
-y:-5
-}}
-
-className="
-rounded-xl
-bg-purple-600/10
-border
-border-purple-500/20
-p-4
-"
-
-
->
-
-
-<p className="
-text-zinc-400
-text-sm
-">
-
-{title}
-
-</p>
-
-
-
-<h2 className="
-mt-2
-text-3xl
-font-bold
-text-white
-">
-
-{value}
-
-</h2>
-
-
-</motion.div>
-
-
-);
-
-
-
-
-
-
-
-
-const Section=({title,children})=>(
-
-
-<div className="mt-7">
-
-
-<h2 className="
-text-xl
-font-bold
-text-white
-mb-3
-">
-
-{title}
-
-</h2>
-
-
-{children}
-
-
-</div>
-
-
-);
-
-
-
 
 export default Reports;

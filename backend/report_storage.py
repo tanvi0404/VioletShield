@@ -19,11 +19,13 @@ def save_report(report):
 
 
         db.session.add(new_report)
-
         db.session.commit()
 
+        report["id"] = new_report.id
+        report["db_id"] = new_report.id
 
         return report
+
 
 
     except Exception as e:
