@@ -55,9 +55,11 @@ from tools.cve_scanner import search_cve, lookup_cve_by_id
 from tools.gobuster_scanner import run_gobuster_scan
 from tools.nikto_scanner import run_nikto_scan
 from tools.file_analyzer import analyze_file, compute_file_hashes, query_virustotal_file_report
+from tools.iac_scanner import scan_iac_snippet, scan_iac_file, get_supported_rules
 from werkzeug.utils import secure_filename
 import tempfile
 import os
+
 
 
 
@@ -1768,9 +1770,83 @@ def get_security_alerts():
         return jsonify({"error": str(e)}), 500
 
 
+# =============================================================================
+# PHASE 15: CLOUD INFRASTRUCTURE & IAC SECURITY SCANNER
+# =============================================================================
+
+@app.route("/api/iac-scan/snippet", methods=["POST"])
+@jwt_required()
+def scan_iac_code_snippet():
+    """Performs static CIS compliance analysis on an IaC code snippet."""
+    try:
+        data = request.json or {}
+        code = data.get("code", "")
+        format_type = data.get("format", "terraform")
+
+        if not code.strip():
+            return jsonify({"error": "IaC code snippet cannot be empty"}), 400
+
+        result = scan_iac_snippet(code, format_type)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/iac-scan", methods=["POST"])
+@app.route("/api/cloud-scan", methods=["POST"])
+@jwt_required()
+def scan_iac_uploaded_file():
+    """Handles uploaded Terraform, Kubernetes, Dockerfile, or CloudFormation files."""
+    try:
+        user_id = get_jwt_identity()
+        if "file" not in request.files:
+            return jsonify({"error": "No file uploaded in form data (key 'file' required)"}), 400
+
+        file = request.files["file"]
+        if not file or file.filename == "":
+            return jsonify({"error": "Empty filename provided"}), 400
+
+        filename = secure_filename(file.filename)
+        allowed_extensions = {".tf", ".tfvars", ".yaml", ".yml", ".json", ".dockerfile"}
+        ext = os.path.splitext(filename)[1].lower()
+
+        if ext not in allowed_extensions and "dockerfile" not in filename.lower():
+            return jsonify({"error": f"Unsupported file type '{ext}'. Allowed: .tf, .yaml, .yml, .json, Dockerfile"}), 400
+
+        # Save to sandbox temp directory and scan safely
+        with tempfile.TemporaryDirectory() as temp_dir:
+            temp_path = os.path.join(temp_dir, filename)
+            file.save(temp_path)
+
+            scan_results = scan_iac_file(temp_path, original_filename=filename)
+
+            log_audit_event(
+                user_id=int(user_id),
+                action="IAC_SCAN_EXECUTED",
+                target=filename,
+                details=f"Audited {filename} - Score: {scan_results.get('compliance_score')}%, Status: {scan_results.get('status')}"
+            )
+
+            return jsonify(scan_results)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/iac-scan/rules", methods=["GET"])
+@jwt_required()
+def get_iac_security_rules():
+    """Returns the CIS & OWASP cloud infrastructure ruleset."""
+    try:
+        rules = get_supported_rules()
+        return jsonify(rules)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 # =========================
 # START SERVER
 # =========================
+
 
 
 

@@ -300,5 +300,34 @@ export const getSecurityAlerts = async () => {
   return response.data;
 };
 
+// ===================================
+// PHASE 15: CLOUD INFRASTRUCTURE & IAC SECURITY
+// ===================================
+export const scanIacFile = async (formData) => {
+  const token = localStorage.getItem("token");
+  const response = await API.post("/api/iac-scan", formData, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+      "Content-Type": "multipart/form-data",
+    },
+  });
+  return response.data;
+};
+
+export const scanIacSnippet = async (code, format = "terraform") => {
+  const response = await API.post(
+    "/api/iac-scan/snippet",
+    { code, format },
+    getAuthHeaders()
+  );
+  return response.data;
+};
+
+export const getIacRules = async () => {
+  const response = await API.get("/api/iac-scan/rules", getAuthHeaders());
+  return response.data;
+};
+
+
 
 

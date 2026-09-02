@@ -50,8 +50,13 @@ const Topbar = () => {
       case "/dashboard/alerts":
       case "/dashboard/schedules":
         return "Continuous Monitoring & Alerting Engine";
+      case "/dashboard/cloud-security":
+      case "/dashboard/cloud-scan":
+      case "/dashboard/iac-scanner":
+        return "Cloud Infrastructure & IaC Security";
       default:
         return "Security Dashboard";
+
 
     }
   };

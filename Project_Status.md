@@ -69,20 +69,27 @@
 ✅ Automated Baseline Delta-Tracking Diff Engine (New open ports, new CVEs, security score drops)
 ✅ Dedicated `/api/schedules`, `/api/schedules/<id>/run`, `/api/notification-channels`, and `/api/alerts` routes
 ✅ Interactive Continuous Monitoring Workbench in React (`/dashboard/monitoring`)
+✅ Phase 15: Cloud Infrastructure & IaC Security Scanning (Terraform, Kubernetes, Dockerfile & CIS Benchmarks)
+✅ Multi-Format Static Analysis Engine (Terraform HCL, Kubernetes Manifests, Dockerfiles, CloudFormation)
+✅ CIS Foundations & OWASP Cloud Benchmark Mapping with Automated Remediation Code Snippets
+✅ Dedicated `/api/iac-scan`, `/api/iac-scan/snippet`, and `/api/iac-scan/rules` Flask routes
+✅ Interactive React Cloud Security Workbench (`/dashboard/cloud-security`) with Code Editor & File Dropzone
 
 ## Current Phase:
-Phase 14 Completed ✅
+Phase 15 Completed ✅
 
 ## Current Setup:
 Windows:
-- Flask backend (all scan, AI correlation, CVE, Phase 7 web audit, Phase 8 file analysis, Phase 9 threat intel, Phase 10 risk engine, Phase 11 reports, Phase 12 SOC analytics, Phase 13 RBAC/Orgs & Phase 14 Scheduler/Alerts active)
-- React frontend (Complete Cyber-Dark SOC Dashboard, Continuous Monitoring Workbench, Attack Surface, Trend Timeline, Scan History Table, Multi-Format Exports & Team Settings)
+- Flask backend (all scan, AI correlation, CVE, Phase 7 web audit, Phase 8 file analysis, Phase 9 threat intel, Phase 10 risk engine, Phase 11 reports, Phase 12 SOC analytics, Phase 13 RBAC/Orgs, Phase 14 Scheduler/Alerts & Phase 15 IaC/Cloud Security active)
+- React frontend (Complete Cyber-Dark SOC Dashboard, Continuous Monitoring Workbench, Cloud & IaC Security Analyzer, Attack Surface, Trend Timeline, Scan History Table, Multi-Format Exports & Team Settings)
 - Continuous Monitoring Engine (APScheduler + Webhook Dispatcher)
+- Cloud Security Posture Management (CIS / CSPM IaC Engine)
 
 Kali:
 - searchsploit working
 - exploit_api.py created
 - Flask API on port 8000
+
 
 
 

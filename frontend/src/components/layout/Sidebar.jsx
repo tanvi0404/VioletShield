@@ -11,8 +11,10 @@ import {
   LogOut,
   Shield,
   Zap,
-  Radio
+  Radio,
+  Cloud
 } from "lucide-react";
+
 import { NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 
@@ -78,12 +80,19 @@ const menuItems = [
     badge: "Alerts",
   },
   {
+    title: "Cloud & IaC Security",
+    icon: <Cloud size={19} />,
+    path: "/dashboard/cloud-security",
+    badge: "CIS/CSPM",
+  },
+  {
     title: "Team & Settings",
     icon: <Settings size={19} />,
     path: "/dashboard/settings",
     badge: "RBAC",
   },
 ];
+
 
 
 

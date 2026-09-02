@@ -12,7 +12,9 @@ import Reports from "../pages/dashboard/Reports";
 import FileAnalysis from "../pages/dashboard/FileAnalysis";
 import UserSettings from "../pages/dashboard/UserSettings";
 import Monitoring from "../pages/dashboard/Monitoring";
+import CloudSecurity from "../pages/dashboard/CloudSecurity";
 import Login from "../pages/auth/Login";
+
 
 
 
@@ -132,7 +134,24 @@ const AppRouter = () => {
           }
         />
 
+        <Route
+          path="/dashboard/cloud-security"
+          element={
+            <DashboardLayout>
+              <CloudSecurity />
+            </DashboardLayout>
+          }
+        />
+
         {/* URL Aliases & Fallbacks */}
+        <Route path="/dashboard/cloud-scan" element={<Navigate to="/dashboard/cloud-security" replace />} />
+        <Route path="/dashboard/cloud_security" element={<Navigate to="/dashboard/cloud-security" replace />} />
+        <Route path="/dashboard/iac-scanner" element={<Navigate to="/dashboard/cloud-security" replace />} />
+        <Route path="/dashboard/iac-scan" element={<Navigate to="/dashboard/cloud-security" replace />} />
+        <Route path="/dashboard/iac_scanner" element={<Navigate to="/dashboard/cloud-security" replace />} />
+        <Route path="/cloud-security" element={<Navigate to="/dashboard/cloud-security" replace />} />
+        <Route path="/iac-scanner" element={<Navigate to="/dashboard/cloud-security" replace />} />
+
         <Route path="/dashboard/alerts" element={<Navigate to="/dashboard/monitoring" replace />} />
         <Route path="/dashboard/schedules" element={<Navigate to="/dashboard/monitoring" replace />} />
         <Route path="/dashboard/continuous-monitoring" element={<Navigate to="/dashboard/monitoring" replace />} />
@@ -143,6 +162,7 @@ const AppRouter = () => {
         <Route path="/continuous_monitoring" element={<Navigate to="/dashboard/monitoring" replace />} />
         <Route path="/monitoring" element={<Navigate to="/dashboard/monitoring" replace />} />
         <Route path="/dashboard/team" element={<Navigate to="/dashboard/settings" replace />} />
+
 
 
         <Route path="/dashboard/organization" element={<Navigate to="/dashboard/settings" replace />} />
