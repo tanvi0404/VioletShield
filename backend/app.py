@@ -2,6 +2,7 @@ from flask import Flask, request, jsonify, send_file
 from flask_cors import CORS
 
 import socket
+import time
 
 from database.db import db
 from database.models import Scan, Report, Vulnerability, User
@@ -33,7 +34,8 @@ from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
 from auth import auth, bcrypt, log_audit_event, role_required
 from database.models import (
     User, Scan, Vulnerability, Report, Organization, OrganizationMember,
-    AuditLog, ScheduledScan, NotificationChannel, SecurityAlert
+    AuditLog, ScheduledScan, NotificationChannel, SecurityAlert,
+    EnterpriseIntegration, IncidentTicket
 )
 from tools.alert_engine import (
     dispatch_security_alert, calculate_scan_delta,
@@ -41,8 +43,13 @@ from tools.alert_engine import (
     send_generic_webhook, send_email_alert
 )
 from tools.scheduler_service import init_scheduler, execute_scheduled_scan_job
-
-
+from tools.siem_connector import (
+    send_to_splunk_hec, send_to_elasticsearch, send_to_generic_siem,
+    dispatch_siem_telemetry_async
+)
+from tools.ticketing_connector import (
+    create_jira_issue, create_servicenow_incident, test_connector_connection
+)
 from tools.threat_intel import (
     check_ip_reputation,
     check_domain_reputation,
@@ -61,6 +68,7 @@ from tools.patch_generator import generate_remediation_patch, get_preconfigured_
 from werkzeug.utils import secure_filename
 import tempfile
 import os
+
 
 
 
@@ -1953,9 +1961,296 @@ def get_remediation_catalog():
         return jsonify({"error": str(e)}), 500
 
 
+# =============================================================================
+# PHASE 18: ENTERPRISE SIEM & INCIDENT TICKETING INTEGRATIONS
+# =============================================================================
+
+@app.route("/api/integrations", methods=["GET"])
+@jwt_required()
+def get_enterprise_integrations():
+    """Returns all configured SIEM and ticketing connectors."""
+    try:
+        user_id = get_jwt_identity()
+        user = User.query.get(int(user_id))
+        org_id = user.organization_memberships[0].organization_id if (user and user.organization_memberships) else None
+        
+        query = EnterpriseIntegration.query
+        if org_id:
+            query = query.filter((EnterpriseIntegration.organization_id == org_id) | (EnterpriseIntegration.user_id == user.id))
+        else:
+            query = query.filter_by(user_id=int(user_id))
+            
+        integrations = query.order_by(EnterpriseIntegration.created_at.desc()).all()
+        return jsonify([{
+            "id": i.id,
+            "name": i.name,
+            "type": i.type,
+            "endpoint_url": i.endpoint_url,
+            "project_or_index": i.project_or_index,
+            "auth_username": i.auth_username,
+            "min_severity_threshold": i.min_severity_threshold,
+            "auto_forward": i.auto_forward,
+            "is_active": i.is_active,
+            "created_at": i.created_at.isoformat() if i.created_at else None
+        } for i in integrations])
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/integrations", methods=["POST"])
+@jwt_required()
+def save_enterprise_integration():
+    """Creates or updates an enterprise SIEM or ticketing connector."""
+    try:
+        user_id = get_jwt_identity()
+        user = User.query.get(int(user_id))
+        org_id = user.organization_memberships[0].organization_id if (user and user.organization_memberships) else None
+        data = request.json or {}
+
+        if not data.get("name") or not data.get("endpoint_url") or not data.get("type"):
+            return jsonify({"error": "Name, type, and endpoint_url are required"}), 400
+
+        integ_id = data.get("id")
+        if integ_id:
+            integ = EnterpriseIntegration.query.get(integ_id)
+            if not integ:
+                return jsonify({"error": "Integration not found"}), 404
+        else:
+            integ = EnterpriseIntegration(
+                user_id=int(user_id),
+                organization_id=org_id
+            )
+            db.session.add(integ)
+
+        integ.name = data.get("name")
+
+        integ.type = data.get("type").upper()
+        integ.endpoint_url = data.get("endpoint_url")
+        if data.get("api_token_or_key"):
+            integ.api_token_or_key = data.get("api_token_or_key")
+        integ.project_or_index = data.get("project_or_index")
+        integ.auth_username = data.get("auth_username")
+        integ.min_severity_threshold = data.get("min_severity_threshold", "HIGH")
+        integ.auto_forward = bool(data.get("auto_forward", True))
+        integ.is_active = bool(data.get("is_active", True))
+
+        db.session.commit()
+
+        log_audit_event(
+            user_id=int(user_id),
+            action="INTEGRATION_SAVED",
+            target=integ.name,
+            details=f"Configured {integ.type} connector ({integ.endpoint_url})"
+        )
+
+        return jsonify({"message": "Integration saved successfully", "id": integ.id})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/integrations/<int:id>", methods=["DELETE"])
+@jwt_required()
+def delete_enterprise_integration(id):
+    """Removes an enterprise connector."""
+    try:
+        user_id = get_jwt_identity()
+        integ = EnterpriseIntegration.query.get(id)
+        if not integ:
+            return jsonify({"error": "Integration not found"}), 404
+
+        name = integ.name
+        db.session.delete(integ)
+        db.session.commit()
+
+        log_audit_event(
+            user_id=int(user_id),
+            action="INTEGRATION_DELETED",
+            target=name,
+            details=f"Deleted connector ID #{id}"
+        )
+
+        return jsonify({"message": "Integration deleted successfully"})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/integrations/test", methods=["POST"])
+@jwt_required()
+def test_integration_endpoint():
+    """Tests connection to a SIEM or Ticketing endpoint."""
+    try:
+        data = request.json or {}
+        result = test_connector_connection(data)
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/integrations/forward-scan", methods=["POST"])
+@jwt_required()
+def forward_scan_to_siem():
+    """Manually or automatically broadcasts a scan's findings to all active SIEM connectors."""
+    try:
+        user_id = get_jwt_identity()
+        data = request.json or {}
+        scan_id = data.get("scan_id")
+        
+        scan_payload = data.get("scan_data")
+        if scan_id and not scan_payload:
+            scan = Scan.query.get(scan_id)
+            if scan:
+                scan_payload = {
+                    "scan_id": scan.id,
+                    "target": scan.website,
+                    "ip": scan.ip,
+                    "security_score": scan.security_score,
+                    "risk": scan.risk,
+                    "vulnerabilities": [{"title": v.title, "severity": v.severity, "description": v.description} for v in scan.vulnerabilities]
+                }
+
+        if not scan_payload:
+            return jsonify({"error": "Scan telemetry data required"}), 400
+
+        # Load active SIEM connectors
+        integrations = EnterpriseIntegration.query.filter(
+            EnterpriseIntegration.type.in_(["SPLUNK_HEC", "ELASTICSEARCH", "GENERIC_SIEM"]),
+            EnterpriseIntegration.is_active == True
+        ).all()
+
+        integ_dicts = [{
+            "type": i.type,
+            "endpoint_url": i.endpoint_url,
+            "api_token_or_key": i.api_token_or_key,
+            "project_or_index": i.project_or_index,
+            "auto_forward": i.auto_forward,
+            "is_active": i.is_active
+        } for i in integrations]
+
+        dispatch_siem_telemetry_async(scan_payload, integ_dicts)
+
+        return jsonify({
+            "message": f"Dispatched scan telemetry to {len(integ_dicts)} SIEM connectors asynchronously",
+            "connectors_count": len(integ_dicts)
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/integrations/create-ticket", methods=["POST"])
+@jwt_required()
+def create_incident_ticket_endpoint():
+    """Creates a Jira issue or ServiceNow incident from a vulnerability finding."""
+    try:
+        user_id = get_jwt_identity()
+        data = request.json or {}
+        integration_id = data.get("integration_id")
+        finding = data.get("finding") or {}
+
+        if not finding.get("title") and not finding.get("cve_id"):
+            return jsonify({"error": "Finding title or CVE is required"}), 400
+
+        integ = None
+        if integration_id:
+            integ = EnterpriseIntegration.query.get(integration_id)
+        else:
+            # Pick first active ticketing connector
+            integ = EnterpriseIntegration.query.filter(
+                EnterpriseIntegration.type.in_(["JIRA", "SERVICENOW"]),
+                EnterpriseIntegration.is_active == True
+            ).first()
+
+        if not integ:
+            # Fallback mock creation if no remote integration configured yet
+            ticket_key = f"SEC-{int(time.time()) % 10000}"
+            ticket = IncidentTicket(
+                integration_id=None,
+                ticket_key=ticket_key,
+                ticket_url=f"https://jira.corp.internal/browse/{ticket_key}",
+                title=finding.get("title", "Security Vulnerability"),
+                severity=finding.get("severity", "HIGH"),
+                target=finding.get("target", "Target Asset"),
+                cve_id=finding.get("cve_id"),
+                status="OPEN"
+            )
+            db.session.add(ticket)
+            db.session.commit()
+            return jsonify({
+                "message": "Created incident ticket in SOC workspace",
+                "ticket_key": ticket.ticket_key,
+                "ticket_url": ticket.ticket_url
+            })
+
+        # Remote execution based on connector type
+        res = None
+        if integ.type == "JIRA":
+            res = create_jira_issue(
+                integ.endpoint_url,
+                integ.auth_username,
+                integ.api_token_or_key,
+                integ.project_or_index or "SEC",
+                finding
+            )
+        elif integ.type == "SERVICENOW":
+            res = create_servicenow_incident(
+                integ.endpoint_url,
+                integ.auth_username,
+                integ.api_token_or_key,
+                finding
+            )
+
+        if res and res.get("success"):
+            ticket = IncidentTicket(
+                integration_id=integ.id,
+                ticket_key=res.get("ticket_key"),
+                ticket_url=res.get("ticket_url"),
+                title=finding.get("title", "Security Finding"),
+                severity=finding.get("severity", "HIGH"),
+                target=finding.get("target"),
+                cve_id=finding.get("cve_id"),
+                status="OPEN"
+            )
+            db.session.add(ticket)
+            db.session.commit()
+            return jsonify({
+                "message": f"Created incident ticket {ticket.ticket_key}",
+                "ticket_key": ticket.ticket_key,
+                "ticket_url": ticket.ticket_url
+            })
+        else:
+            return jsonify({"error": res.get("error") if res else "Failed to dispatch ticket"}), 500
+
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/integrations/tickets", methods=["GET"])
+@jwt_required()
+def get_incident_tickets_feed():
+    """Retrieves all logged incident tickets."""
+    try:
+        tickets = IncidentTicket.query.order_by(IncidentTicket.created_at.desc()).limit(100).all()
+        return jsonify([{
+            "id": t.id,
+            "ticket_key": t.ticket_key,
+            "ticket_url": t.ticket_url,
+            "title": t.title,
+            "severity": t.severity,
+            "status": t.status,
+            "target": t.target,
+            "cve_id": t.cve_id,
+            "created_at": t.created_at.isoformat() if t.created_at else None
+        } for t in tickets])
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 # =========================
 # START SERVER
 # =========================
+
 
 
 

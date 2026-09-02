@@ -14,8 +14,10 @@ import {
   Radio,
   Cloud,
   Award,
-  Wrench
+  Wrench,
+  Share2
 } from "lucide-react";
+
 
 
 
@@ -102,12 +104,19 @@ const menuItems = [
     badge: "AI Patch",
   },
   {
+    title: "SIEM & Ticketing",
+    icon: <Share2 size={19} />,
+    path: "/dashboard/integrations",
+    badge: "Splunk/Jira",
+  },
+  {
     title: "Team & Settings",
     icon: <Settings size={19} />,
     path: "/dashboard/settings",
     badge: "RBAC",
   },
 ];
+
 
 
 

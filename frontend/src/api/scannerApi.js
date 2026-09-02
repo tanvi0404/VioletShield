@@ -370,6 +370,45 @@ export const getRemediationCatalog = async () => {
   return response.data;
 };
 
+// ===================================
+// PHASE 18: ENTERPRISE SIEM & INCIDENT TICKETING
+// ===================================
+export const getIntegrations = async () => {
+  const response = await API.get("/api/integrations", getAuthHeaders());
+  return response.data;
+};
+
+export const saveIntegration = async (data) => {
+  const response = await API.post("/api/integrations", data, getAuthHeaders());
+  return response.data;
+};
+
+export const deleteIntegration = async (id) => {
+  const response = await API.delete(`/api/integrations/${id}`, getAuthHeaders());
+  return response.data;
+};
+
+export const testIntegration = async (data) => {
+  const response = await API.post("/api/integrations/test", data, getAuthHeaders());
+  return response.data;
+};
+
+export const forwardScanToSiem = async (payload) => {
+  const response = await API.post("/api/integrations/forward-scan", payload, getAuthHeaders());
+  return response.data;
+};
+
+export const createIncidentTicket = async (payload) => {
+  const response = await API.post("/api/integrations/create-ticket", payload, getAuthHeaders());
+  return response.data;
+};
+
+export const getIncidentTickets = async () => {
+  const response = await API.get("/api/integrations/tickets", getAuthHeaders());
+  return response.data;
+};
+
+
 
 
 

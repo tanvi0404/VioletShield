@@ -62,8 +62,13 @@ const Topbar = () => {
       case "/dashboard/patches":
       case "/dashboard/patch-assistant":
         return "Automated Remediation & AI Patch Studio";
+      case "/dashboard/integrations":
+      case "/dashboard/siem":
+      case "/dashboard/ticketing":
+        return "Enterprise SIEM & Incident Ticketing Hub";
       default:
         return "Security Dashboard";
+
 
 
 

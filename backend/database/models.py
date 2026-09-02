@@ -184,3 +184,43 @@ class Report(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
     scan = db.relationship("Scan", backref="reports")
+
+
+# =============================================================================
+# PHASE 18: ENTERPRISE SIEM & INCIDENT TICKETING INTEGRATIONS
+# =============================================================================
+
+class EnterpriseIntegration(db.Model):
+    __tablename__ = "enterprise_integrations"
+
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey("users.id"), nullable=True)
+    organization_id = db.Column(db.Integer, db.ForeignKey("organizations.id"), nullable=True)
+    name = db.Column(db.String(100), nullable=False)
+    type = db.Column(db.String(50), nullable=False) # SPLUNK_HEC, ELASTICSEARCH, JIRA, SERVICENOW, GENERIC_SIEM
+    endpoint_url = db.Column(db.String(500), nullable=False)
+    api_token_or_key = db.Column(db.Text, nullable=True)
+    project_or_index = db.Column(db.String(100), nullable=True) # Jira project key, Splunk index, ELK index
+    auth_username = db.Column(db.String(100), nullable=True) # Jira email or basic auth username
+    min_severity_threshold = db.Column(db.String(20), default="HIGH") # CRITICAL, HIGH, MEDIUM, LOW
+    auto_forward = db.Column(db.Boolean, default=True)
+    is_active = db.Column(db.Boolean, default=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+    updated_at = db.Column(db.DateTime, default=datetime.utcnow, onupdate=datetime.utcnow)
+
+
+class IncidentTicket(db.Model):
+    __tablename__ = "incident_tickets"
+
+    id = db.Column(db.Integer, primary_key=True)
+    integration_id = db.Column(db.Integer, db.ForeignKey("enterprise_integrations.id"), nullable=True)
+    ticket_key = db.Column(db.String(100), nullable=False) # e.g. SEC-104 or INC0019283
+    ticket_url = db.Column(db.String(500), nullable=True)
+    title = db.Column(db.String(255), nullable=False)
+    severity = db.Column(db.String(50), nullable=False)
+    status = db.Column(db.String(50), default="OPEN") # OPEN, IN_PROGRESS, RESOLVED, CLOSED
+    target = db.Column(db.String(255), nullable=True)
+    cve_id = db.Column(db.String(100), nullable=True)
+    created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+    integration = db.relationship("EnterpriseIntegration", backref="tickets", lazy=True)
