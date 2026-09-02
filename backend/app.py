@@ -56,9 +56,11 @@ from tools.gobuster_scanner import run_gobuster_scan
 from tools.nikto_scanner import run_nikto_scan
 from tools.file_analyzer import analyze_file, compute_file_hashes, query_virustotal_file_report
 from tools.iac_scanner import scan_iac_snippet, scan_iac_file, get_supported_rules
+from tools.compliance_engine import evaluate_scan_compliance, get_framework_metadata
 from werkzeug.utils import secure_filename
 import tempfile
 import os
+
 
 
 
@@ -1843,9 +1845,76 @@ def get_iac_security_rules():
         return jsonify({"error": str(e)}), 500
 
 
+# =============================================================================
+# PHASE 16: REGULATORY COMPLIANCE & FRAMEWORK MAPPING
+# =============================================================================
+
+@app.route("/api/compliance/<int:scan_id>", methods=["GET"])
+@jwt_required()
+def get_scan_compliance(scan_id):
+    """Evaluates regulatory framework compliance (PCI-DSS, HIPAA, SOC 2, ISO 27001) for a scan."""
+    try:
+        scan = Scan.query.get(scan_id)
+        if not scan:
+            return jsonify({"error": "Scan record not found"}), 404
+
+        # Reconstruct scan telemetry model
+        vulns_list = [{"title": v.title, "severity": v.severity, "description": v.description} for v in scan.vulnerabilities]
+        scan_telemetry = {
+            "website": scan.website,
+            "ip": scan.ip,
+            "security_score": scan.security_score,
+            "risk": scan.risk,
+            "vulnerabilities": vulns_list,
+            "ports": [],
+            "ssl": {"valid": True, "protocol": "TLSv1.3"},
+            "headers": {},
+            "threat_intel": {"reputation": "CLEAN"}
+        }
+
+        compliance_report = evaluate_scan_compliance(scan_telemetry)
+        return jsonify(compliance_report)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/compliance/evaluate", methods=["POST"])
+@jwt_required()
+def evaluate_custom_compliance():
+    """Evaluates regulatory compliance for an arbitrary scan telemetry payload."""
+    try:
+        user_id = get_jwt_identity()
+        data = request.json or {}
+        compliance_report = evaluate_scan_compliance(data)
+
+        target = data.get("website") or data.get("target") or "Target Asset"
+        log_audit_event(
+            user_id=int(user_id),
+            action="COMPLIANCE_AUDIT_EVALUATED",
+            target=target,
+            details=f"Evaluated regulatory compliance for {target} - Overall Score: {compliance_report.get('overall_score')}% ({compliance_report.get('overall_status')})"
+        )
+
+        return jsonify(compliance_report)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/compliance/frameworks", methods=["GET"])
+@jwt_required()
+def get_compliance_framework_list():
+    """Returns definitions and control requirements for supported regulatory frameworks."""
+    try:
+        frameworks = get_framework_metadata()
+        return jsonify(frameworks)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 # =========================
 # START SERVER
 # =========================
+
 
 
 

@@ -200,6 +200,9 @@ export const getMyScans = async () => {
   return response.data;
 };
 
+export const getScans = getMyScans;
+
+
 export const getReports = async () => {
   const response = await API.get("/api/reports", getAuthHeaders());
   return response.data;
@@ -327,6 +330,29 @@ export const getIacRules = async () => {
   const response = await API.get("/api/iac-scan/rules", getAuthHeaders());
   return response.data;
 };
+
+// ===================================
+// PHASE 16: REGULATORY COMPLIANCE & FRAMEWORK MAPPING
+// ===================================
+export const getScanCompliance = async (scanId) => {
+  const response = await API.get(`/api/compliance/${scanId}`, getAuthHeaders());
+  return response.data;
+};
+
+export const evaluateCompliance = async (scanData) => {
+  const response = await API.post(
+    "/api/compliance/evaluate",
+    scanData,
+    getAuthHeaders()
+  );
+  return response.data;
+};
+
+export const getComplianceFrameworks = async () => {
+  const response = await API.get("/api/compliance/frameworks", getAuthHeaders());
+  return response.data;
+};
+
 
 
 

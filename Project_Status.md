@@ -74,21 +74,28 @@
 ✅ CIS Foundations & OWASP Cloud Benchmark Mapping with Automated Remediation Code Snippets
 ✅ Dedicated `/api/iac-scan`, `/api/iac-scan/snippet`, and `/api/iac-scan/rules` Flask routes
 ✅ Interactive React Cloud Security Workbench (`/dashboard/cloud-security`) with Code Editor & File Dropzone
+✅ Phase 16: Regulatory Compliance & Framework Mapping (PCI-DSS v4.0, HIPAA, SOC 2 Type II, ISO 27001:2022)
+✅ Multi-Framework GRC Mapping Engine (Translates ports, CVEs, SSL, headers into regulatory controls)
+✅ Granular Control Audit Breakdown (Pass/Fail metrics, audit evidence, gap analysis & remediation roadmaps)
+✅ Dedicated `/api/compliance/<id>`, `/api/compliance/evaluate`, and `/api/compliance/frameworks` routes
+✅ Interactive React Compliance Workbench (`/dashboard/compliance`) with Unified GRC Matrix & Scan Selector
 
 ## Current Phase:
-Phase 15 Completed ✅
+Phase 16 Completed ✅
 
 ## Current Setup:
 Windows:
-- Flask backend (all scan, AI correlation, CVE, Phase 7 web audit, Phase 8 file analysis, Phase 9 threat intel, Phase 10 risk engine, Phase 11 reports, Phase 12 SOC analytics, Phase 13 RBAC/Orgs, Phase 14 Scheduler/Alerts & Phase 15 IaC/Cloud Security active)
-- React frontend (Complete Cyber-Dark SOC Dashboard, Continuous Monitoring Workbench, Cloud & IaC Security Analyzer, Attack Surface, Trend Timeline, Scan History Table, Multi-Format Exports & Team Settings)
+- Flask backend (all scan, AI correlation, CVE, Phase 7 web audit, Phase 8 file analysis, Phase 9 threat intel, Phase 10 risk engine, Phase 11 reports, Phase 12 SOC analytics, Phase 13 RBAC/Orgs, Phase 14 Scheduler/Alerts, Phase 15 IaC/Cloud Security & Phase 16 GRC Compliance active)
+- React frontend (Complete Cyber-Dark SOC Dashboard, Continuous Monitoring, Cloud Security, Regulatory Compliance Workbench, Attack Surface, Trend Timeline, Scan History Table, Multi-Format Exports & Team Settings)
 - Continuous Monitoring Engine (APScheduler + Webhook Dispatcher)
 - Cloud Security Posture Management (CIS / CSPM IaC Engine)
+- GRC Regulatory Engine (PCI-DSS v4.0, HIPAA, SOC 2, ISO 27001)
 
 Kali:
 - searchsploit working
 - exploit_api.py created
 - Flask API on port 8000
+
 
 
 

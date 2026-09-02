@@ -54,8 +54,13 @@ const Topbar = () => {
       case "/dashboard/cloud-scan":
       case "/dashboard/iac-scanner":
         return "Cloud Infrastructure & IaC Security";
+      case "/dashboard/compliance":
+      case "/dashboard/regulatory-compliance":
+      case "/dashboard/grc":
+        return "Regulatory Compliance & GRC Audit";
       default:
         return "Security Dashboard";
+
 
 
     }

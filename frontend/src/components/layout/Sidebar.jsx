@@ -12,8 +12,10 @@ import {
   Shield,
   Zap,
   Radio,
-  Cloud
+  Cloud,
+  Award
 } from "lucide-react";
+
 
 import { NavLink, useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
@@ -86,12 +88,19 @@ const menuItems = [
     badge: "CIS/CSPM",
   },
   {
+    title: "Compliance & GRC",
+    icon: <Award size={19} />,
+    path: "/dashboard/compliance",
+    badge: "SOC2/PCI",
+  },
+  {
     title: "Team & Settings",
     icon: <Settings size={19} />,
     path: "/dashboard/settings",
     badge: "RBAC",
   },
 ];
+
 
 
 
