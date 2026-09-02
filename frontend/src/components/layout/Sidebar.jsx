@@ -71,7 +71,21 @@ const menuItems = [
     path: "/dashboard/reports",
     badge: null,
   },
+  {
+    title: "Continuous Monitoring",
+    icon: <Radio size={19} />,
+    path: "/dashboard/monitoring",
+    badge: "Alerts",
+  },
+  {
+    title: "Team & Settings",
+    icon: <Settings size={19} />,
+    path: "/dashboard/settings",
+    badge: "RBAC",
+  },
 ];
+
+
 
 
 const Sidebar = () => {

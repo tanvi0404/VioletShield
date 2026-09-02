@@ -20,11 +20,29 @@ from security_headers import analyze_security_headers
 from pdf_generator import generate_pdf
 from ssl_checker import check_ssl
 from security_score import evaluate_detailed_risk_score, calculate_security_score
+from tools.report_engine import (
+    generate_pdf_report,
+    generate_json_report,
+    generate_html_report,
+    build_unified_report_model
+)
+
 
 
 from flask_jwt_extended import JWTManager, jwt_required, get_jwt_identity
-from auth import auth, bcrypt
-from tools.nmap_scanner import run_nmap_scan
+from auth import auth, bcrypt, log_audit_event, role_required
+from database.models import (
+    User, Scan, Vulnerability, Report, Organization, OrganizationMember,
+    AuditLog, ScheduledScan, NotificationChannel, SecurityAlert
+)
+from tools.alert_engine import (
+    dispatch_security_alert, calculate_scan_delta,
+    send_slack_alert, send_discord_alert, send_teams_alert,
+    send_generic_webhook, send_email_alert
+)
+from tools.scheduler_service import init_scheduler, execute_scheduled_scan_job
+
+
 from tools.threat_intel import (
     check_ip_reputation,
     check_domain_reputation,
@@ -272,126 +290,86 @@ def threat_intel_blacklists():
 @app.route("/api/dashboard", methods=["GET"])
 @jwt_required()
 def dashboard():
+    try:
+        user_id = get_jwt_identity()
 
-    user_id = get_jwt_identity()
+        total_scans = Scan.query.filter_by(user_id=user_id).count()
 
+        average_score = db.session.query(
+            db.func.avg(Scan.security_score)
+        ).filter(
+            Scan.user_id == user_id
+        ).scalar()
 
-    total_scans = Scan.query.filter_by(
-        user_id=user_id
-    ).count()
+        high = Scan.query.filter_by(user_id=user_id, risk="High").count()
+        medium = Scan.query.filter_by(user_id=user_id, risk="Medium").count()
+        low = Scan.query.filter_by(user_id=user_id, risk="Low").count()
 
+        latest_scan = Scan.query.filter_by(user_id=user_id).order_by(Scan.created_at.desc()).first()
 
+        # Attack Surface & Unique Hosts
+        unique_hosts_count = db.session.query(db.func.count(db.func.distinct(Scan.website))).filter(Scan.user_id == user_id).scalar() or 0
+        ssl_compliant_count = Scan.query.filter(Scan.user_id == user_id, Scan.website.ilike("https%")).count()
+        ssl_compliance_rate = round((ssl_compliant_count / total_scans * 100)) if total_scans > 0 else 100
 
-    average_score = db.session.query(
-        db.func.avg(Scan.security_score)
-    ).filter(
-        Scan.user_id == user_id
-    ).scalar()
+        # Vulnerabilities Aggregation
+        total_vulns = db.session.query(db.func.count(Vulnerability.id)).join(Scan).filter(Scan.user_id == user_id).scalar() or 0
+        vuln_high = db.session.query(db.func.count(Vulnerability.id)).join(Scan).filter(Scan.user_id == user_id, Vulnerability.severity.in_(["High", "Critical", "HIGH", "CRITICAL"])).scalar() or 0
+        vuln_med = db.session.query(db.func.count(Vulnerability.id)).join(Scan).filter(Scan.user_id == user_id, Vulnerability.severity.in_(["Medium", "MEDIUM"])).scalar() or 0
+        vuln_low = db.session.query(db.func.count(Vulnerability.id)).join(Scan).filter(Scan.user_id == user_id, Vulnerability.severity.in_(["Low", "LOW"])).scalar() or 0
 
+        # Recent Scans History (up to 15)
+        scans = Scan.query.filter_by(user_id=user_id).order_by(Scan.created_at.desc()).limit(15).all()
 
-
-    high = Scan.query.filter_by(
-        user_id=user_id,
-        risk="High"
-    ).count()
-
-
-
-    medium = Scan.query.filter_by(
-        user_id=user_id,
-        risk="Medium"
-    ).count()
-
-
-
-    low = Scan.query.filter_by(
-        user_id=user_id,
-        risk="Low"
-    ).count()
-
-
-
-    latest_scan = Scan.query.filter_by(
-        user_id=user_id
-    ).order_by(
-        Scan.created_at.desc()
-    ).first()
-
-
-
-    # =========================
-    # RECENT SCANS FOR GRAPH
-    # =========================
-
-    scans = Scan.query.filter_by(
-        user_id=user_id
-    ).order_by(
-        Scan.created_at.desc()
-    ).limit(10).all()
+        reports = []
+        scan_history = []
+        for scan in scans:
+            item = {
+                "id": scan.id,
+                "website": scan.website,
+                "ip": scan.ip or "N/A",
+                "security_score": scan.security_score,
+                "risk": scan.risk,
+                "ssl_status": "https" in str(scan.website).lower(),
+                "created_at": str(scan.created_at)
+            }
+            reports.append(item)
+            scan_history.append(item)
 
 
-
-    reports = []
-
-
-    for scan in scans:
-
-        reports.append({
-
-            "website": scan.website,
-
-            "security_score": scan.security_score,
-
-            "risk": scan.risk,
-
-            "created_at": str(scan.created_at)
-
+        return jsonify({
+            "total_scans": total_scans,
+            "average_score": round(average_score) if average_score else 0,
+            "high": high,
+            "medium": medium,
+            "low": low,
+            "reports": reports,
+            "scan_history": scan_history,
+            "attack_surface": {
+                "unique_hosts": unique_hosts_count,
+                "total_scanned_assets": total_scans,
+                "ssl_compliant_hosts": ssl_compliant_count,
+                "ssl_compliance_rate": ssl_compliance_rate,
+                "total_vulnerabilities": total_vulns,
+                "vulnerability_distribution": {
+                    "critical_high": vuln_high,
+                    "medium": vuln_med,
+                    "low": vuln_low
+                }
+            },
+            "latest_scan": {
+                "id": latest_scan.id,
+                "website": latest_scan.website,
+                "score": latest_scan.security_score,
+                "risk": latest_scan.risk,
+                "created_at": str(latest_scan.created_at)
+            } if latest_scan else None
         })
 
+    except Exception as e:
+        print("DASHBOARD STATS ERROR:", str(e))
+        return jsonify({"error": str(e)}), 500
 
-
-    return jsonify({
-
-
-        "total_scans": total_scans,
-
-
-        "average_score":
-        round(average_score)
-        if average_score else 0,
-
-
-        "high": high,
-
-
-        "medium": medium,
-
-
-        "low": low,
-
-
-        "reports": reports,
-
-
-        "latest_scan": {
-
-
-            "website": latest_scan.website,
-
-
-            "score": latest_scan.security_score,
-
-
-            "risk": latest_scan.risk,
-
-
-            "created_at": str(latest_scan.created_at)
-
-
-        } if latest_scan else None
-
-
-    })
 # =========================
 # USER SCANS
 # =========================
@@ -479,36 +457,41 @@ def recent_scans():
     return jsonify(result)
 
 
-# =========================
-# PDF REPORT DOWNLOAD
-# =========================
+# =============================================================================
+# PHASE 11: AUTOMATED MULTI-FORMAT SECURITY REPORT GENERATION (PDF / JSON / HTML)
+# =============================================================================
+
+def _resolve_report_target(report_id):
+    """Helper to locate Scan and Report records safely."""
+    report = None
+    scan = None
+
+    if str(report_id).isdigit():
+        rid = int(report_id)
+        report = Report.query.get(rid)
+        if not report:
+            report = Report.query.filter_by(scan_id=rid).first()
+        if not report:
+            scan = Scan.query.get(rid)
+
+    if not report and not scan:
+        report = Report.query.order_by(Report.id.desc()).first()
+        if not report:
+            scan = Scan.query.order_by(Scan.id.desc()).first()
+
+    return report, scan
 
 
 @app.route("/api/report/<string:report_id>", methods=["GET"])
+@app.route("/api/report/<string:report_id>/pdf", methods=["GET"])
 def download_report(report_id):
-
+    """
+    Downloads or exports the security penetration test report in PDF, JSON, or HTML.
+    Supports query param ?format=pdf|json|html (defaults to PDF).
+    """
     try:
-        report = None
-        scan = None
-
-        # Strategy 1: If numeric, search Report by primary key id
-        if report_id.isdigit():
-            rid = int(report_id)
-            report = Report.query.get(rid)
-
-            # Strategy 2: If not found, search Report by scan_id
-            if not report:
-                report = Report.query.filter_by(scan_id=rid).first()
-
-            # Strategy 3: Check if it's a direct Scan id
-            if not report:
-                scan = Scan.query.get(rid)
-
-        # Strategy 4: Fallback to most recent Report or Scan if not found
-        if not report and not scan:
-            report = Report.query.order_by(Report.id.desc()).first()
-            if not report:
-                scan = Scan.query.order_by(Scan.id.desc()).first()
+        export_format = request.args.get("format", "pdf").lower()
+        report, scan = _resolve_report_target(report_id)
 
         if not report and not scan:
             return jsonify({"error": "Report not found"}), 404
@@ -516,30 +499,33 @@ def download_report(report_id):
         target_scan = report.scan if report else scan
         target_id = report.id if report else target_scan.id
 
-        # Retrieve vulnerabilities associated with this scan
         vulns = Vulnerability.query.filter_by(scan_id=target_scan.id).all() if target_scan else []
         vuln_list = [
-            {
-                "title": v.title,
-                "severity": v.severity,
-                "description": v.description
-            }
+            {"title": v.title, "severity": v.severity, "description": v.description}
             for v in vulns
         ]
 
-        pdf_path = generate_pdf(
-            {
-                "id": str(target_id),
-                "scan_id": target_scan.id if target_scan else 1,
-                "website": target_scan.website if target_scan else "Target Domain",
-                "score": target_scan.security_score if target_scan else 0,
-                "risk": target_scan.risk if target_scan else "Low",
-                "ip": (target_scan.ip if target_scan else None) or "N/A",
-                "date": str(target_scan.created_at if target_scan else datetime.now()),
-                "vulnerabilities": vuln_list
-            }
-        )
+        report_payload = {
+            "id": str(target_id),
+            "scan_id": target_scan.id if target_scan else 1,
+            "website": target_scan.website if target_scan else "Target Domain",
+            "score": target_scan.security_score if target_scan else 0,
+            "risk": target_scan.risk if target_scan else "Low",
+            "ip": (target_scan.ip if target_scan else None) or "N/A",
+            "date": str(target_scan.created_at if target_scan else datetime.now()),
+            "vulnerabilities": vuln_list
+        }
 
+        if export_format == "json" or request.path.endswith("/json"):
+            return jsonify(generate_json_report(report_payload))
+
+        elif export_format == "html" or request.path.endswith("/html"):
+            html_content = generate_html_report(report_payload)
+            from flask import Response
+            return Response(html_content, mimetype="text/html")
+
+        # Default PDF
+        pdf_path = generate_pdf_report(report_payload)
         return send_file(
             pdf_path,
             as_attachment=True,
@@ -550,6 +536,77 @@ def download_report(report_id):
         import traceback
         traceback.print_exc()
         return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/report/<string:report_id>/json", methods=["GET"])
+def download_report_json(report_id):
+    """Direct JSON export of security report."""
+    report, scan = _resolve_report_target(report_id)
+    if not report and not scan:
+        return jsonify({"error": "Report not found"}), 404
+
+    target_scan = report.scan if report else scan
+    vulns = Vulnerability.query.filter_by(scan_id=target_scan.id).all() if target_scan else []
+    report_payload = {
+        "id": str(report.id if report else target_scan.id),
+        "scan_id": target_scan.id if target_scan else 1,
+        "website": target_scan.website if target_scan else "Target Domain",
+        "score": target_scan.security_score if target_scan else 0,
+        "risk": target_scan.risk if target_scan else "Low",
+        "ip": (target_scan.ip if target_scan else None) or "N/A",
+        "date": str(target_scan.created_at if target_scan else datetime.now()),
+        "vulnerabilities": [{"title": v.title, "severity": v.severity, "description": v.description} for v in vulns]
+    }
+    return jsonify(generate_json_report(report_payload))
+
+
+@app.route("/api/report/<string:report_id>/html", methods=["GET"])
+def download_report_html(report_id):
+    """Direct standalone HTML view of security report."""
+    report, scan = _resolve_report_target(report_id)
+    if not report and not scan:
+        return jsonify({"error": "Report not found"}), 404
+
+    target_scan = report.scan if report else scan
+    vulns = Vulnerability.query.filter_by(scan_id=target_scan.id).all() if target_scan else []
+    report_payload = {
+        "id": str(report.id if report else target_scan.id),
+        "scan_id": target_scan.id if target_scan else 1,
+        "website": target_scan.website if target_scan else "Target Domain",
+        "score": target_scan.security_score if target_scan else 0,
+        "risk": target_scan.risk if target_scan else "Low",
+        "ip": (target_scan.ip if target_scan else None) or "N/A",
+        "date": str(target_scan.created_at if target_scan else datetime.now()),
+        "vulnerabilities": [{"title": v.title, "severity": v.severity, "description": v.description} for v in vulns]
+    }
+    html_content = generate_html_report(report_payload)
+    from flask import Response
+    return Response(html_content, mimetype="text/html")
+
+
+@app.route("/api/report/export", methods=["POST"])
+@jwt_required()
+def export_custom_report():
+    """
+    On-demand multi-format report exporter from arbitrary scan data payloads.
+    """
+    try:
+        data = request.json or {}
+        export_format = data.get("format", "json").lower()
+
+        if export_format == "html":
+            html_content = generate_html_report(data)
+            from flask import Response
+            return Response(html_content, mimetype="text/html")
+        elif export_format == "pdf":
+            pdf_path = generate_pdf_report(data)
+            return send_file(pdf_path, as_attachment=True, download_name="VioletShield_Custom_Report.pdf")
+        else:
+            return jsonify(generate_json_report(data))
+
+    except Exception as e:
+        return jsonify({"error": f"Export failed: {str(e)}"}), 500
+
 
 
 
@@ -1091,9 +1148,631 @@ def calculate_risk_endpoint():
         return jsonify({"error": f"Risk assessment failed: {str(e)}"}), 500
 
 
+# =============================================================================
+# PHASE 13: USER PROFILE, ORGANIZATION WORKSPACES & AUDIT LOGGING
+# =============================================================================
+
+@app.route("/api/user/profile", methods=["GET"])
+@jwt_required()
+def get_user_profile():
+    """Returns profile details, role, clearance, and workspaces for the active user."""
+    try:
+        user_id = get_jwt_identity()
+        user = User.query.get(int(user_id)) if str(user_id).isdigit() else None
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        orgs = []
+        for mem in user.organization_memberships:
+            orgs.append({
+                "id": mem.organization.id,
+                "name": mem.organization.name,
+                "slug": mem.organization.slug,
+                "member_role": mem.role,
+                "joined_at": str(mem.joined_at)
+            })
+
+        return jsonify({
+            "id": user.id,
+            "name": user.name,
+            "email": user.email,
+            "role": user.role or "ADMIN",
+            "created_at": str(user.created_at),
+            "organizations": orgs
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/user/profile", methods=["PUT"])
+@jwt_required()
+def update_user_profile():
+    """Updates user name and/or password."""
+    try:
+        user_id = get_jwt_identity()
+        user = User.query.get(int(user_id)) if str(user_id).isdigit() else None
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        data = request.json or {}
+        new_name = data.get("name")
+        new_password = data.get("password")
+
+        if new_name and str(new_name).strip():
+            user.name = str(new_name).strip()
+
+        if new_password and str(new_password).strip():
+            user.password = bcrypt.generate_password_hash(str(new_password).strip()).decode("utf-8")
+
+        db.session.commit()
+
+        log_audit_event(
+            user_id=user.id,
+            action="PROFILE_UPDATED",
+            target=user.email,
+            details="User profile settings modified successfully"
+        )
+
+        return jsonify({
+            "message": "Profile updated successfully",
+            "user": {
+                "id": user.id,
+                "name": user.name,
+                "email": user.email,
+                "role": user.role
+            }
+        })
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/organizations", methods=["GET"])
+@jwt_required()
+def get_user_organizations():
+    """Retrieves all organizations the current user belongs to."""
+    try:
+        user_id = get_jwt_identity()
+        user = User.query.get(int(user_id)) if str(user_id).isdigit() else None
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        orgs = []
+        for mem in user.organization_memberships:
+            members_count = OrganizationMember.query.filter_by(organization_id=mem.organization_id).count()
+            orgs.append({
+                "id": mem.organization.id,
+                "name": mem.organization.name,
+                "slug": mem.organization.slug,
+                "member_role": mem.role,
+                "members_count": members_count,
+                "created_at": str(mem.organization.created_at)
+            })
+
+        return jsonify(orgs)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/organizations", methods=["POST"])
+@jwt_required()
+def create_organization():
+    """Creates a new organization and assigns the user as OWNER."""
+    try:
+        user_id = get_jwt_identity()
+        user = User.query.get(int(user_id)) if str(user_id).isdigit() else None
+        if not user:
+            return jsonify({"error": "User not found"}), 404
+
+        data = request.json or {}
+        org_name = data.get("name")
+        if not org_name or not str(org_name).strip():
+            return jsonify({"error": "Organization name is required"}), 400
+
+        import re
+        clean_name = str(org_name).strip()
+        slug_base = re.sub(r'[^a-z0-9]', '', clean_name.lower()) or "soc"
+        slug = f"{slug_base}-{int(datetime.utcnow().timestamp())}"
+
+        new_org = Organization(name=clean_name, slug=slug)
+        db.session.add(new_org)
+        db.session.commit()
+
+        membership = OrganizationMember(
+            user_id=user.id,
+            organization_id=new_org.id,
+            role="OWNER"
+        )
+        db.session.add(membership)
+        db.session.commit()
+
+        log_audit_event(
+            user_id=user.id,
+            action="ORGANIZATION_CREATED",
+            target=clean_name,
+            details=f"Created workspace '{clean_name}' (ID #{new_org.id})",
+            org_id=new_org.id
+        )
+
+        return jsonify({
+            "message": "Organization created successfully",
+            "organization": {
+                "id": new_org.id,
+                "name": new_org.name,
+                "slug": new_org.slug,
+                "member_role": "OWNER"
+            }
+        }), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/organizations/<int:org_id>/members", methods=["GET"])
+@jwt_required()
+def get_organization_members(org_id):
+    """Retrieves all members for an organization."""
+    try:
+        user_id = get_jwt_identity()
+        # Verify user is a member of this organization
+        is_member = OrganizationMember.query.filter_by(user_id=user_id, organization_id=org_id).first()
+        if not is_member:
+            return jsonify({"error": "Access denied to organization members list"}), 403
+
+        members = OrganizationMember.query.filter_by(organization_id=org_id).all()
+        result = []
+        for m in members:
+            result.append({
+                "id": m.id,
+                "user_id": m.user.id,
+                "name": m.user.name,
+                "email": m.user.email,
+                "role": m.role,
+                "joined_at": str(m.joined_at)
+            })
+
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/organizations/<int:org_id>/members", methods=["POST"])
+@jwt_required()
+def invite_organization_member(org_id):
+    """Invites or assigns a user to an organization."""
+    try:
+        user_id = get_jwt_identity()
+        admin_mem = OrganizationMember.query.filter_by(user_id=user_id, organization_id=org_id).first()
+        if not admin_mem or admin_mem.role not in ["OWNER", "ADMIN"]:
+            return jsonify({"error": "Only Organization Owners and Admins can invite new members"}), 403
+
+        data = request.json or {}
+        email = data.get("email", "").strip().lower()
+        role = data.get("role", "ANALYST").upper()
+        if role not in ["ADMIN", "ANALYST", "VIEWER"]:
+            role = "ANALYST"
+
+        if not email:
+            return jsonify({"error": "User email is required"}), 400
+
+        target_user = User.query.filter_by(email=email).first()
+        if not target_user:
+            # Auto-provision invitation account placeholder
+            temp_pwd = bcrypt.generate_password_hash("WelcomeToVioletShield2026!").decode("utf-8")
+            target_user = User(name=email.split("@")[0].title(), email=email, password=temp_pwd, role=role)
+            db.session.add(target_user)
+            db.session.commit()
+
+        # Check if already a member
+        existing = OrganizationMember.query.filter_by(user_id=target_user.id, organization_id=org_id).first()
+        if existing:
+            existing.role = role
+            db.session.commit()
+            return jsonify({"message": f"Updated role for {email} to {role}"})
+
+        new_membership = OrganizationMember(user_id=target_user.id, organization_id=org_id, role=role)
+        db.session.add(new_membership)
+        db.session.commit()
+
+        log_audit_event(
+            user_id=int(user_id),
+            action="MEMBER_INVITED",
+            target=email,
+            details=f"Invited {email} as {role} to Org #{org_id}",
+            org_id=org_id
+        )
+
+        return jsonify({
+            "message": f"Member {email} added successfully as {role}",
+            "member": {
+                "id": new_membership.id,
+                "name": target_user.name,
+                "email": target_user.email,
+                "role": role
+            }
+        }), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/organizations/<int:org_id>/members/<int:member_id>", methods=["DELETE"])
+@jwt_required()
+def remove_organization_member(org_id, member_id):
+    """Removes a member from an organization."""
+    try:
+        user_id = get_jwt_identity()
+        admin_mem = OrganizationMember.query.filter_by(user_id=user_id, organization_id=org_id).first()
+        if not admin_mem or admin_mem.role not in ["OWNER", "ADMIN"]:
+            return jsonify({"error": "Admin privileges required"}), 403
+
+        mem = OrganizationMember.query.get(member_id)
+        if not mem or mem.organization_id != org_id:
+            return jsonify({"error": "Member not found"}), 404
+
+        if mem.role == "OWNER":
+            return jsonify({"error": "Cannot remove the workspace OWNER"}), 400
+
+        target_email = mem.user.email if mem.user else "User"
+        db.session.delete(mem)
+        db.session.commit()
+
+        log_audit_event(
+            user_id=int(user_id),
+            action="MEMBER_REMOVED",
+            target=target_email,
+            details=f"Removed {target_email} from Org #{org_id}",
+            org_id=org_id
+        )
+
+        return jsonify({"message": "Member removed successfully"})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/audit-logs", methods=["GET"])
+@jwt_required()
+def get_audit_logs():
+    """Retrieves user and organization security audit logs."""
+    try:
+        user_id = get_jwt_identity()
+        logs = AuditLog.query.filter(
+            (AuditLog.user_id == user_id) | (AuditLog.user_id == None)
+        ).order_by(AuditLog.timestamp.desc()).limit(30).all()
+
+        result = []
+        for l in logs:
+            result.append({
+                "id": l.id,
+                "action": l.action,
+                "target": l.target or "-",
+                "ip_address": l.ip_address or "127.0.0.1",
+                "details": l.details or "",
+                "timestamp": str(l.timestamp)
+            })
+
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+# =============================================================================
+# PHASE 14: CONTINUOUS MONITORING, SCAN SCHEDULES & WEBHOOK ALERTING
+# =============================================================================
+
+@app.route("/api/schedules", methods=["GET"])
+@jwt_required()
+def get_schedules():
+    """Returns all registered recurring scan schedules for the user."""
+    try:
+        user_id = get_jwt_identity()
+        schedules = ScheduledScan.query.filter_by(user_id=user_id).order_by(ScheduledScan.created_at.desc()).all()
+        result = []
+        for s in schedules:
+            result.append({
+                "id": s.id,
+                "target": s.target,
+                "scan_type": s.scan_type,
+                "frequency": s.frequency,
+                "is_active": s.is_active,
+                "last_run": str(s.last_run) if s.last_run else None,
+                "next_run": str(s.next_run) if s.next_run else None,
+                "last_score": s.last_score,
+                "last_risk": s.last_risk,
+                "created_at": str(s.created_at)
+            })
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/schedules", methods=["POST"])
+@jwt_required()
+@role_required(["ADMIN", "ANALYST"])
+def create_schedule():
+    """Creates a new recurring automated scan schedule."""
+    try:
+        user_id = get_jwt_identity()
+        data = request.json or {}
+        target = data.get("target")
+        scan_type = data.get("scan_type", "FULL").upper()
+        frequency = data.get("frequency", "DAILY").upper()
+
+        if not target:
+            return jsonify({"error": "Target domain or IP is required"}), 400
+
+        from datetime import timedelta
+        next_run = datetime.utcnow()
+        if frequency == "HOURLY":
+            next_run += timedelta(hours=1)
+        elif frequency == "WEEKLY":
+            next_run += timedelta(days=7)
+        elif frequency == "MONTHLY":
+            next_run += timedelta(days=30)
+        else: # DAILY
+            next_run += timedelta(days=1)
+
+        schedule = ScheduledScan(
+            user_id=user_id,
+            target=target.strip(),
+            scan_type=scan_type,
+            frequency=frequency,
+            is_active=True,
+            next_run=next_run
+        )
+        db.session.add(schedule)
+        db.session.commit()
+
+        log_audit_event(
+            user_id=int(user_id),
+            action="SCHEDULE_CREATED",
+            target=target,
+            details=f"Configured {frequency} automated scan for {target}"
+        )
+
+        return jsonify({
+            "message": f"Continuous monitoring schedule created for {target}",
+            "schedule": {
+                "id": schedule.id,
+                "target": schedule.target,
+                "frequency": schedule.frequency,
+                "scan_type": schedule.scan_type,
+                "next_run": str(schedule.next_run)
+            }
+        }), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/schedules/<int:sched_id>", methods=["DELETE"])
+@jwt_required()
+@role_required(["ADMIN", "ANALYST"])
+def delete_schedule(sched_id):
+    """Deletes an existing scan schedule."""
+    try:
+        user_id = get_jwt_identity()
+        schedule = ScheduledScan.query.get(sched_id)
+        if not schedule or str(schedule.user_id) != str(user_id):
+            return jsonify({"error": "Schedule not found"}), 404
+
+        target = schedule.target
+        db.session.delete(schedule)
+        db.session.commit()
+
+        log_audit_event(
+            user_id=int(user_id),
+            action="SCHEDULE_DELETED",
+            target=target,
+            details=f"Deleted monitoring schedule for {target}"
+        )
+
+        return jsonify({"message": f"Schedule for {target} removed successfully"})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/schedules/<int:sched_id>/run", methods=["POST"])
+@jwt_required()
+@role_required(["ADMIN", "ANALYST"])
+def run_schedule_now(sched_id):
+    """Manually triggers an immediate execution of a scheduled scan job."""
+    try:
+        user_id = get_jwt_identity()
+        schedule = ScheduledScan.query.get(sched_id)
+        if not schedule or str(schedule.user_id) != str(user_id):
+            return jsonify({"error": "Schedule not found"}), 404
+
+        # Execute scan in background job
+        execute_scheduled_scan_job(app, sched_id)
+
+        log_audit_event(
+            user_id=int(user_id),
+            action="SCHEDULE_MANUAL_TRIGGER",
+            target=schedule.target,
+            details=f"Manually triggered immediate scheduled scan for {schedule.target}"
+        )
+
+        return jsonify({"message": f"Scheduled scan for {schedule.target} executed successfully!"})
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/notification-channels", methods=["GET"])
+@jwt_required()
+def get_notification_channels():
+    """Retrieves all configured notification webhooks & email channels."""
+    try:
+        user_id = get_jwt_identity()
+        channels = NotificationChannel.query.filter_by(user_id=user_id).order_by(NotificationChannel.created_at.desc()).all()
+        result = []
+        for ch in channels:
+            result.append({
+                "id": ch.id,
+                "name": ch.name,
+                "channel_type": ch.channel_type,
+                "destination": ch.destination,
+                "min_severity": ch.min_severity,
+                "is_active": ch.is_active,
+                "created_at": str(ch.created_at)
+            })
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/notification-channels", methods=["POST"])
+@jwt_required()
+@role_required(["ADMIN", "ANALYST"])
+def create_notification_channel():
+    """Configures a new notification webhook channel."""
+    try:
+        user_id = get_jwt_identity()
+        data = request.json or {}
+        name = data.get("name")
+        channel_type = (data.get("channel_type") or "SLACK").upper()
+        destination = data.get("destination")
+        min_severity = (data.get("min_severity") or "MEDIUM").upper()
+
+        if not name or not destination:
+            return jsonify({"error": "Channel name and destination webhook URL/email are required"}), 400
+
+        ch = NotificationChannel(
+            user_id=user_id,
+            name=name.strip(),
+            channel_type=channel_type,
+            destination=destination.strip(),
+            min_severity=min_severity,
+            is_active=True
+        )
+        db.session.add(ch)
+        db.session.commit()
+
+        log_audit_event(
+            user_id=int(user_id),
+            action="NOTIFICATION_CHANNEL_CREATED",
+            target=name,
+            details=f"Configured {channel_type} alert channel ({min_severity}+ threshold)"
+        )
+
+        return jsonify({
+            "message": f"Notification channel '{name}' configured successfully",
+            "channel": {
+                "id": ch.id,
+                "name": ch.name,
+                "channel_type": ch.channel_type,
+                "destination": ch.destination,
+                "min_severity": ch.min_severity
+            }
+        }), 201
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/notification-channels/test", methods=["POST"])
+@jwt_required()
+@role_required(["ADMIN", "ANALYST"])
+def test_notification_channel():
+    """Dispatches a test notification payload to verify webhook integration."""
+    try:
+        data = request.json or {}
+        channel_type = (data.get("channel_type") or "SLACK").upper()
+        destination = data.get("destination")
+
+        if not destination:
+            return jsonify({"error": "Destination URL / Email is required"}), 400
+
+        test_alert = {
+            "target": "target.corp.local",
+            "severity": "HIGH",
+            "title": "VioletShield Webhook Connection Test",
+            "description": "This is a verified test alert dispatched from VioletShield Continuous Monitoring.",
+            "delta_summary": "Test connection established successfully. All alert channels operational."
+        }
+
+        success = False
+        if channel_type == "SLACK":
+            success = send_slack_alert(destination, test_alert)
+        elif channel_type == "DISCORD":
+            success = send_discord_alert(destination, test_alert)
+        elif channel_type == "TEAMS":
+            success = send_teams_alert(destination, test_alert)
+        elif channel_type == "EMAIL":
+            success = send_email_alert({}, destination, test_alert)
+        else:
+            success = send_generic_webhook(destination, test_alert)
+
+        return jsonify({
+            "success": success,
+            "message": f"Test alert dispatched to {channel_type} destination ({destination})"
+        })
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/notification-channels/<int:channel_id>", methods=["DELETE"])
+@jwt_required()
+@role_required(["ADMIN", "ANALYST"])
+def delete_notification_channel(channel_id):
+    """Deletes a notification channel."""
+    try:
+        user_id = get_jwt_identity()
+        ch = NotificationChannel.query.get(channel_id)
+        if not ch or str(ch.user_id) != str(user_id):
+            return jsonify({"error": "Channel not found"}), 404
+
+        name = ch.name
+        db.session.delete(ch)
+        db.session.commit()
+
+        log_audit_event(
+            user_id=int(user_id),
+            action="NOTIFICATION_CHANNEL_DELETED",
+            target=name,
+            details=f"Deleted notification channel '{name}'"
+        )
+
+        return jsonify({"message": f"Channel '{name}' removed successfully"})
+    except Exception as e:
+        db.session.rollback()
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/alerts", methods=["GET"])
+@jwt_required()
+def get_security_alerts():
+    """Retrieves all triggered security alerts and delta breach records."""
+    try:
+        user_id = get_jwt_identity()
+        alerts = SecurityAlert.query.filter(
+            (SecurityAlert.user_id == user_id) | (SecurityAlert.user_id == None)
+        ).order_by(SecurityAlert.timestamp.desc()).limit(40).all()
+
+        result = []
+        for a in alerts:
+            result.append({
+                "id": a.id,
+                "target": a.target,
+                "severity": a.severity,
+                "title": a.title,
+                "description": a.description or "",
+                "delta_summary": a.delta_summary or "",
+                "status": a.status,
+                "timestamp": str(a.timestamp)
+            })
+        return jsonify(result)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 # =========================
 # START SERVER
 # =========================
+
+
 
 
 

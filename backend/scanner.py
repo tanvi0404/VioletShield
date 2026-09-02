@@ -322,3 +322,7 @@ def scan_website(url, user_id):
     except Exception as e:
         print("SCAN ERROR:", e)
         return {"error": str(e)}
+
+
+# Alias for backward compatibility
+full_scan = scan_website

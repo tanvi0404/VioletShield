@@ -205,19 +205,100 @@ export const getReports = async () => {
   return response.data;
 };
 
+// ===================================
+// PHASE 11: MULTI-FORMAT REPORT EXPORTS
+// ===================================
 export const downloadReportPdf = (reportId) => {
-  return `http://127.0.0.1:5000/api/report/${reportId}`;
+  return `http://127.0.0.1:5000/api/report/${reportId}/pdf`;
 };
 
-// ===================================
-// PHASE 10: AI RISK SCORING ENGINE
-// ===================================
-export const calculateRiskScore = async (scanData) => {
+export const downloadReportJson = (reportId) => {
+  return `http://127.0.0.1:5000/api/report/${reportId}/json`;
+};
+
+export const downloadReportHtml = (reportId) => {
+  return `http://127.0.0.1:5000/api/report/${reportId}/html`;
+};
+
+export const exportCustomReport = async (scanData, format = "json") => {
   const response = await API.post(
-    "/api/risk-score",
-    scanData,
+    "/api/report/export",
+    { ...scanData, format },
     getAuthHeaders()
   );
   return response.data;
 };
+
+// ===================================
+// PHASE 14: CONTINUOUS MONITORING & ALERTING
+// ===================================
+
+export const getScheduledScans = async () => {
+  const response = await API.get("/api/schedules", getAuthHeaders());
+  return response.data;
+};
+
+export const createScheduledScan = async (scheduleData) => {
+  const response = await API.post(
+    "/api/schedules",
+    scheduleData,
+    getAuthHeaders()
+  );
+  return response.data;
+};
+
+export const deleteScheduledScan = async (schedId) => {
+  const response = await API.delete(
+    `/api/schedules/${schedId}`,
+    getAuthHeaders()
+  );
+  return response.data;
+};
+
+export const triggerScheduledScan = async (schedId) => {
+  const response = await API.post(
+    `/api/schedules/${schedId}/run`,
+    {},
+    getAuthHeaders()
+  );
+  return response.data;
+};
+
+export const getNotificationChannels = async () => {
+  const response = await API.get("/api/notification-channels", getAuthHeaders());
+  return response.data;
+};
+
+export const createNotificationChannel = async (channelData) => {
+  const response = await API.post(
+    "/api/notification-channels",
+    channelData,
+    getAuthHeaders()
+  );
+  return response.data;
+};
+
+export const testNotificationChannel = async (channelData) => {
+  const response = await API.post(
+    "/api/notification-channels/test",
+    channelData,
+    getAuthHeaders()
+  );
+  return response.data;
+};
+
+export const deleteNotificationChannel = async (channelId) => {
+  const response = await API.delete(
+    `/api/notification-channels/${channelId}`,
+    getAuthHeaders()
+  );
+  return response.data;
+};
+
+export const getSecurityAlerts = async () => {
+  const response = await API.get("/api/alerts", getAuthHeaders());
+  return response.data;
+};
+
+
 

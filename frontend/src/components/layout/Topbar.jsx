@@ -1,16 +1,25 @@
-﻿import React, { useState, useEffect } from "react";
-import { ShieldCheck, Search, Bell, Clock, Terminal, Radio } from "lucide-react";
-import { useLocation } from "react-router-dom";
+import React, { useState, useEffect } from "react";
+import { ShieldCheck, Search, Bell, Clock, Terminal, Radio, Shield } from "lucide-react";
+import { useLocation, Link } from "react-router-dom";
 import { motion } from "framer-motion";
+import { getUserProfile } from "../../api/authApi";
 
 const Topbar = () => {
   const location = useLocation();
   const [time, setTime] = useState(new Date().toLocaleTimeString());
+  const [user, setUser] = useState({ name: "Security Analyst", role: "ADMIN" });
 
   useEffect(() => {
     const timer = setInterval(() => {
       setTime(new Date().toLocaleTimeString());
     }, 1000);
+
+    getUserProfile()
+      .then((data) => {
+        if (data) setUser(data);
+      })
+      .catch(() => {});
+
     return () => clearInterval(timer);
   }, []);
 
@@ -26,13 +35,31 @@ const Topbar = () => {
         return "Nmap & ExploitDB Advanced Scanner";
       case "/dashboard/exploit-search":
         return "Exploit Database & Searchsploit";
+      case "/dashboard/file-analysis":
+        return "Malware & File Integrity Analysis";
       case "/dashboard/threat-intel":
         return "Threat Intelligence & IP Reputation";
       case "/dashboard/reports":
         return "Security Audit Reports";
+      case "/dashboard/settings":
+      case "/dashboard/team":
+      case "/dashboard/organization":
+        return "User Management & RBAC Workspaces";
+      case "/dashboard/monitoring":
+      case "/dashboard/continuous-monitoring":
+      case "/dashboard/alerts":
+      case "/dashboard/schedules":
+        return "Continuous Monitoring & Alerting Engine";
       default:
         return "Security Dashboard";
+
     }
+  };
+
+  const getInitials = (name) => {
+    if (!name) return "A";
+    const parts = name.trim().split(" ");
+    return parts[0][0].toUpperCase();
   };
 
   return (
@@ -69,16 +96,20 @@ const Topbar = () => {
           <span>Kali Bridge: 8000</span>
         </div>
 
-        {/* USER PROFILE */}
-        <div className="flex items-center gap-3 rounded-2xl border border-purple-500/20 bg-gradient-to-r from-purple-950/30 to-zinc-950/80 px-3.5 py-1.5 shadow-lg">
+        {/* USER PROFILE & SETTINGS LINK */}
+        <Link
+          to="/dashboard/settings"
+          className="flex items-center gap-3 rounded-2xl border border-purple-500/20 bg-gradient-to-r from-purple-950/30 to-zinc-950/80 px-3.5 py-1.5 shadow-lg transition hover:border-purple-500/50 hover:shadow-purple-500/10"
+          title="Open User Profile & Team Settings"
+        >
           <div className="flex h-9 w-9 items-center justify-center rounded-xl bg-gradient-to-tr from-purple-600 to-violet-400 font-black text-white shadow-[0_0_15px_rgba(168,85,247,0.4)]">
-            A
+            {getInitials(user.name)}
           </div>
           <div className="hidden text-left lg:block">
-            <p className="text-xs font-bold text-white">Security Analyst</p>
-            <p className="text-[10px] font-mono text-purple-300">Level 3 Clearance</p>
+            <p className="text-xs font-bold text-white truncate max-w-[140px]">{user.name}</p>
+            <p className="text-[10px] font-mono text-purple-300 uppercase">{user.role || "ADMIN"} CLEARANCE</p>
           </div>
-        </div>
+        </Link>
       </div>
     </motion.header>
   );
