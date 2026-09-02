@@ -125,88 +125,86 @@ const Sidebar = () => {
   };
 
   return (
-    <div className="flex h-screen w-72 flex-col justify-between border-r border-purple-500/20 bg-[#07070b]/90 backdrop-blur-2xl">
-      {/* BRAND LOGO */}
-      <div>
-        <div className="border-b border-purple-500/15 p-6">
-          <div className="flex items-center gap-3.5">
-            <motion.div
-              whileHover={{ rotate: 180, scale: 1.1 }}
-              transition={{ duration: 0.5 }}
-              className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-600 to-violet-500 text-white shadow-[0_0_20px_rgba(168,85,247,0.5)]"
-            >
-              <Shield size={24} />
-            </motion.div>
-            <div>
-              <div className="flex items-center gap-1.5">
-                <h1 className="text-xl font-black tracking-tight text-white">
-                  Violet<span className="text-purple-400">Shield</span>
-                </h1>
-                <span className="rounded-md border border-purple-500/40 bg-purple-500/10 px-1.5 py-0.5 text-[9px] font-mono font-bold text-purple-300">
-                  v2.0
-                </span>
-              </div>
-              <p className="text-[11px] font-medium text-zinc-400">
-                AI Penetration Toolkit
-              </p>
+    <div className="flex h-screen w-72 flex-col border-r border-purple-500/20 bg-[#07070b]/90 backdrop-blur-2xl select-none">
+      {/* BRAND LOGO (STICKY HEADER) */}
+      <div className="shrink-0 border-b border-purple-500/15 p-6">
+        <div className="flex items-center gap-3.5">
+          <motion.div
+            whileHover={{ rotate: 180, scale: 1.1 }}
+            transition={{ duration: 0.5 }}
+            className="flex h-11 w-11 items-center justify-center rounded-2xl bg-gradient-to-br from-purple-600 to-violet-500 text-white shadow-[0_0_20px_rgba(168,85,247,0.5)]"
+          >
+            <Shield size={24} />
+          </motion.div>
+          <div>
+            <div className="flex items-center gap-1.5">
+              <h1 className="text-xl font-black tracking-tight text-white">
+                Violet<span className="text-purple-400">Shield</span>
+              </h1>
+              <span className="rounded-md border border-purple-500/40 bg-purple-500/10 px-1.5 py-0.5 text-[9px] font-mono font-bold text-purple-300">
+                v2.0
+              </span>
             </div>
+            <p className="text-[11px] font-medium text-zinc-400">
+              AI Penetration Toolkit
+            </p>
           </div>
         </div>
-
-        {/* NAVIGATION LINKS */}
-        <nav className="space-y-1.5 px-4 py-6">
-          <div className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
-            Navigation Suite
-          </div>
-          {menuItems.map((item) => (
-            <NavLink
-              key={item.title}
-              to={item.path}
-              end={item.title === "Overview"}
-              className={({ isActive }) =>
-                `group relative flex items-center justify-between rounded-xl px-4 py-3 text-sm font-medium transition-all duration-300 ${
-                  isActive
-                    ? "border border-purple-500/40 bg-gradient-to-r from-purple-600/25 to-violet-600/10 text-white shadow-[0_0_20px_rgba(168,85,247,0.25)]"
-                    : "text-zinc-400 hover:border hover:border-purple-500/20 hover:bg-purple-500/5 hover:text-white"
-                }`
-              }
-            >
-              {({ isActive }) => (
-                <>
-                  <div className="flex items-center gap-3.5">
-                    <span
-                      className={`transition-colors duration-300 ${
-                        isActive
-                          ? "text-purple-400"
-                          : "text-zinc-500 group-hover:text-purple-300"
-                      }`}
-                    >
-                      {item.icon}
-                    </span>
-                    <span>{item.title}</span>
-                  </div>
-
-                  {item.badge && (
-                    <span className="rounded-md border border-purple-500/30 bg-purple-500/10 px-1.5 py-0.5 font-mono text-[10px] font-bold text-purple-300">
-                      {item.badge}
-                    </span>
-                  )}
-
-                  {isActive && (
-                    <motion.div
-                      layoutId="activeIndicator"
-                      className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-purple-400 shadow-[0_0_12px_#a855f7]"
-                    />
-                  )}
-                </>
-              )}
-            </NavLink>
-          ))}
-        </nav>
       </div>
 
-      {/* FOOTER USER & STATUS */}
-      <div className="border-t border-purple-500/15 p-4 space-y-3">
+      {/* NAVIGATION LINKS (SCROLLABLE AREA) */}
+      <nav className="flex-1 overflow-y-auto space-y-1.5 px-4 py-4 scrollbar-thin scrollbar-thumb-purple-900/40 hover:scrollbar-thumb-purple-700/60">
+        <div className="mb-2 px-3 text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
+          Navigation Suite
+        </div>
+        {menuItems.map((item) => (
+          <NavLink
+            key={item.title}
+            to={item.path}
+            end={item.title === "Overview"}
+            className={({ isActive }) =>
+              `group relative flex items-center justify-between rounded-xl px-4 py-2.5 text-sm font-medium transition-all duration-300 ${
+                isActive
+                  ? "border border-purple-500/40 bg-gradient-to-r from-purple-600/25 to-violet-600/10 text-white shadow-[0_0_20px_rgba(168,85,247,0.25)]"
+                  : "text-zinc-400 hover:border hover:border-purple-500/20 hover:bg-purple-500/5 hover:text-white"
+              }`
+            }
+          >
+            {({ isActive }) => (
+              <>
+                <div className="flex items-center gap-3.5">
+                  <span
+                    className={`transition-colors duration-300 ${
+                      isActive
+                        ? "text-purple-400"
+                        : "text-zinc-500 group-hover:text-purple-300"
+                    }`}
+                  >
+                    {item.icon}
+                  </span>
+                  <span>{item.title}</span>
+                </div>
+
+                {item.badge && (
+                  <span className="rounded-md border border-purple-500/30 bg-purple-500/10 px-1.5 py-0.5 font-mono text-[10px] font-bold text-purple-300">
+                    {item.badge}
+                  </span>
+                )}
+
+                {isActive && (
+                  <motion.div
+                    layoutId="activeIndicator"
+                    className="absolute left-0 top-2 bottom-2 w-1 rounded-r-full bg-purple-400 shadow-[0_0_12px_#a855f7]"
+                  />
+                )}
+              </>
+            )}
+          </NavLink>
+        ))}
+      </nav>
+
+      {/* FOOTER USER & STATUS (STICKY FOOTER) */}
+      <div className="shrink-0 border-t border-purple-500/15 p-4 space-y-3 bg-[#07070b]/95">
         {/* SYSTEM STATUS PILL */}
         <div className="flex items-center justify-between rounded-xl border border-zinc-800/80 bg-zinc-950/60 px-3 py-2 text-xs">
           <div className="flex items-center gap-2">
@@ -235,3 +233,4 @@ const Sidebar = () => {
 };
 
 export default Sidebar;
+
