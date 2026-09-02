@@ -57,9 +57,11 @@ from tools.nikto_scanner import run_nikto_scan
 from tools.file_analyzer import analyze_file, compute_file_hashes, query_virustotal_file_report
 from tools.iac_scanner import scan_iac_snippet, scan_iac_file, get_supported_rules
 from tools.compliance_engine import evaluate_scan_compliance, get_framework_metadata
+from tools.patch_generator import generate_remediation_patch, get_preconfigured_remediation_catalog
 from werkzeug.utils import secure_filename
 import tempfile
 import os
+
 
 
 
@@ -1911,9 +1913,50 @@ def get_compliance_framework_list():
         return jsonify({"error": str(e)}), 500
 
 
+# =============================================================================
+# PHASE 17: AUTOMATED REMEDIATION & SECURITY PATCH GENERATOR
+# =============================================================================
+
+@app.route("/api/generate-patch", methods=["POST"])
+@jwt_required()
+def generate_vulnerability_patch():
+    """Generates an actionable code diff, configuration block, or shell script for remediation."""
+    try:
+        user_id = get_jwt_identity()
+        data = request.json or {}
+
+        if not data.get("title") and not data.get("cve_id") and not data.get("description"):
+            return jsonify({"error": "Vulnerability title, CVE ID, or description is required"}), 400
+
+        patch_payload = generate_remediation_patch(data)
+
+        log_audit_event(
+            user_id=int(user_id),
+            action="SECURITY_PATCH_GENERATED",
+            target=data.get("cve_id") or data.get("title") or "Vulnerability",
+            details=f"Generated {patch_payload.get('patch_type')} remediation ({patch_payload.get('download_filename')})"
+        )
+
+        return jsonify(patch_payload)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
+@app.route("/api/remediation-catalog", methods=["GET"])
+@jwt_required()
+def get_remediation_catalog():
+    """Returns curated production-ready patch templates from the knowledgebase."""
+    try:
+        catalog = get_preconfigured_remediation_catalog()
+        return jsonify(catalog)
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
+
+
 # =========================
 # START SERVER
 # =========================
+
 
 
 

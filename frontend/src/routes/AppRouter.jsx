@@ -14,7 +14,9 @@ import UserSettings from "../pages/dashboard/UserSettings";
 import Monitoring from "../pages/dashboard/Monitoring";
 import CloudSecurity from "../pages/dashboard/CloudSecurity";
 import Compliance from "../pages/dashboard/Compliance";
+import RemediationAssistant from "../pages/dashboard/RemediationAssistant";
 import Login from "../pages/auth/Login";
+
 
 
 
@@ -154,13 +156,28 @@ const AppRouter = () => {
           }
         />
 
+        <Route
+          path="/dashboard/remediation"
+          element={
+            <DashboardLayout>
+              <RemediationAssistant />
+            </DashboardLayout>
+          }
+        />
+
         {/* URL Aliases & Fallbacks */}
+        <Route path="/dashboard/patches" element={<Navigate to="/dashboard/remediation" replace />} />
+        <Route path="/dashboard/patch-assistant" element={<Navigate to="/dashboard/remediation" replace />} />
+        <Route path="/dashboard/patch_assistant" element={<Navigate to="/dashboard/remediation" replace />} />
+        <Route path="/remediation" element={<Navigate to="/dashboard/remediation" replace />} />
+
         <Route path="/dashboard/regulatory-compliance" element={<Navigate to="/dashboard/compliance" replace />} />
         <Route path="/dashboard/grc" element={<Navigate to="/dashboard/compliance" replace />} />
         <Route path="/dashboard/pci" element={<Navigate to="/dashboard/compliance" replace />} />
         <Route path="/dashboard/hipaa" element={<Navigate to="/dashboard/compliance" replace />} />
         <Route path="/dashboard/soc2" element={<Navigate to="/dashboard/compliance" replace />} />
         <Route path="/compliance" element={<Navigate to="/dashboard/compliance" replace />} />
+
 
         <Route path="/dashboard/cloud-scan" element={<Navigate to="/dashboard/cloud-security" replace />} />
         <Route path="/dashboard/cloud_security" element={<Navigate to="/dashboard/cloud-security" replace />} />

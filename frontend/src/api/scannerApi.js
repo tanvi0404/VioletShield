@@ -353,6 +353,24 @@ export const getComplianceFrameworks = async () => {
   return response.data;
 };
 
+// ===================================
+// PHASE 17: AUTOMATED REMEDIATION & PATCH GENERATOR
+// ===================================
+export const generatePatch = async (vulnData) => {
+  const response = await API.post(
+    "/api/generate-patch",
+    vulnData,
+    getAuthHeaders()
+  );
+  return response.data;
+};
+
+export const getRemediationCatalog = async () => {
+  const response = await API.get("/api/remediation-catalog", getAuthHeaders());
+  return response.data;
+};
+
+
 
 
 

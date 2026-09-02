@@ -13,8 +13,10 @@ import {
   Zap,
   Radio,
   Cloud,
-  Award
+  Award,
+  Wrench
 } from "lucide-react";
+
 
 
 import { NavLink, useNavigate } from "react-router-dom";
@@ -94,12 +96,19 @@ const menuItems = [
     badge: "SOC2/PCI",
   },
   {
+    title: "Patch & Remediation",
+    icon: <Wrench size={19} />,
+    path: "/dashboard/remediation",
+    badge: "AI Patch",
+  },
+  {
     title: "Team & Settings",
     icon: <Settings size={19} />,
     path: "/dashboard/settings",
     badge: "RBAC",
   },
 ];
+
 
 
 

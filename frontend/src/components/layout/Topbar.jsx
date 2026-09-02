@@ -58,8 +58,13 @@ const Topbar = () => {
       case "/dashboard/regulatory-compliance":
       case "/dashboard/grc":
         return "Regulatory Compliance & GRC Audit";
+      case "/dashboard/remediation":
+      case "/dashboard/patches":
+      case "/dashboard/patch-assistant":
+        return "Automated Remediation & AI Patch Studio";
       default:
         return "Security Dashboard";
+
 
 
 
